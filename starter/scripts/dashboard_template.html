@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảng theo dõi thí nghiệm RAG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: sticky header with tabs; each tab is a stack of cards. Series colors (A/B/C) are colorblind-safe. */
+:root {
+  --bg: #f3f5f8; --surface: #ffffff; --surface2: #eceff4; --ink: #151a26; --muted: #596277; --line: #dbe0e8;
+  --accent: #2748c9; --accent-soft: #e4e9fb;
+  --a: #d98200; --b: #0072b2; --c: #0a8f6a;
+  --hit: #17714a; --hit-bg: #dff3e8; --miss: #b3261e; --miss-bg: #fbe4e1; --warn: #8a5a00; --warn-bg: #fdf0d2;
+  --mark: #fff2a8;
+  --font: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", "Cascadia Mono", Consolas, monospace;
+  --radius: 10px;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #0f131b; --surface: #171c27; --surface2: #202736; --ink: #e8ecf4; --muted: #99a3b8; --line: #2b3346;
+  --accent: #8fa6ff; --accent-soft: #232c52;
+  --a: #f2a93b; --b: #4da3e0; --c: #3cc79e;
+  --hit: #6fd6a2; --hit-bg: #153a2a; --miss: #ff9b92; --miss-bg: #43211f; --warn: #f1c46a; --warn-bg: #3d2f10;
+  --mark: #5f5410; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #0f131b; --surface: #171c27; --surface2: #202736; --ink: #e8ecf4; --muted: #99a3b8; --line: #2b3346;
+  --accent: #8fa6ff; --accent-soft: #232c52;
+  --a: #f2a93b; --b: #4da3e0; --c: #3cc79e;
+  --hit: #6fd6a2; --hit-bg: #153a2a; --miss: #ff9b92; --miss-bg: #43211f; --warn: #f1c46a; --warn-bg: #3d2f10;
+  --mark: #5f5410; color-scheme: dark; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 14px/1.55 var(--font); }
+h1, h2, h3 { margin: 0; line-height: 1.25; text-wrap: balance; }
+h2 { font-size: 17px; } h3 { font-size: 14px; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)); }
+header { background: var(--surface); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+.head-top { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; justify-content: space-between; padding-block: 14px 8px; }
+.head-top h1 { font-size: 19px; letter-spacing: -.01em; }
+.sub { color: var(--muted); font-size: 12.5px; }
+nav { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 0; }
+nav button { background: none; border: 0; border-bottom: 2px solid transparent; padding: 9px 14px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+nav button[aria-selected="true"] { color: var(--ink); border-color: var(--accent); }
+main { padding-block: 22px 60px; display: grid; gap: 18px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px; min-width: 0; }
+.card > h2 + .sub { margin-top: 2px; }
+.grid { display: grid; gap: 14px; }
+.kpis { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.kpi .v { font-size: 25px; font-weight: 650; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--muted); font-size: 12.5px; }
+.kpi .d { font-size: 12px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.two { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
+.sdot { display: inline-grid; place-items: center; width: 20px; height: 20px; border-radius: 6px; font-size: 11.5px; font-weight: 700; color: #fff; }
+.sdot.A { background: var(--a); } .sdot.B { background: var(--b); } .sdot.C { background: var(--c); }
+[data-theme="dark"] .sdot, .dark .sdot { color: #10141c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .sdot { color: #10141c; } }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.scroll { overflow-x: auto; }
+.pill { display: inline-flex; align-items: center; gap: 5px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.pill.hit { background: var(--hit-bg); color: var(--hit); }
+.pill.miss { background: var(--miss-bg); color: var(--miss); }
+.pill.warn { background: var(--warn-bg); color: var(--warn); }
+.pill.neutral { background: var(--surface2); color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; font-size: 12.5px; }
+.chip[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.note { background: var(--warn-bg); color: var(--warn); border-radius: 8px; padding: 9px 12px; font-size: 12.5px; }
+.mono { font-family: var(--mono); font-size: 12px; }
+.muted { color: var(--muted); }
+mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 1px; }
+.qrow { cursor: pointer; } .qrow:hover td { background: var(--surface2); }
+.qrow td:first-child { font-family: var(--mono); font-weight: 500; }
+.detail > td { background: var(--surface2); padding: 16px; }
+.cols3 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); }
+.hitcard { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-width: 0; }
+.hitcard + .hitcard { margin-top: 8px; }
+.hitcard.good { border-color: var(--hit); }
+.hitmeta { display: flex; flex-wrap: wrap; gap: 4px 10px; font-size: 12px; color: var(--muted); margin-bottom: 6px; align-items: center; }
+.chunk { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.5; }
+.quote { border-left: 3px solid var(--accent); padding: 4px 12px; background: var(--accent-soft); border-radius: 0 6px 6px 0; }
+.bars text { font: 11.5px var(--font); fill: var(--muted); }
+.bars .val { fill: var(--ink); font-weight: 600; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); }
+.legend span { display: inline-flex; gap: 6px; align-items: center; }
+.pagebar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+select, textarea, input[type=text] { font: inherit; color: var(--ink); background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+textarea { width: 100%; resize: vertical; min-height: 54px; }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 12px; font-weight: 500; }
+.btn:hover { border-color: var(--accent); }
+.btn.primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+:root[data-theme="dark"] .btn.primary { color: #0f131b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #0f131b; } }
+.score { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.score button { background: var(--surface); border: 0; padding: 6px 14px; font-weight: 600; min-width: 40px; }
+.score button + button { border-left: 1px solid var(--line); }
+.score button[aria-pressed="true"] { background: var(--accent); color: #fff; }
+:root[data-theme="dark"] .score button[aria-pressed="true"] { color: #0f131b; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .score button[aria-pressed="true"] { color: #0f131b; } }
+.item { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 14px; display: grid; gap: 10px; }
+.item:first-of-type { border-top: 0; margin-top: 0; padding-top: 0; }
+.progress { height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+.progress > i { display: block; height: 100%; background: var(--accent); }
+.cell-hint { font-size: 12px; color: var(--muted); }
+.theme { background: none; border: 1px solid var(--line); border-radius: 8px; padding: 4px 10px; font-size: 12.5px; color: var(--muted); }
+@media (max-width: 640px) { .kpi .v { font-size: 21px; } .card { padding: 14px; } }
+@media (prefers-reduced-motion: no-preference) { .progress > i { transition: width .25s; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="head-top">
+      <div>
+        <h1>Thí nghiệm RAG · Introduction to Sociology 3e</h1>
+        <div class="sub" id="runline"></div>
+      </div>
+      <button class="theme" id="theme" type="button" aria-label="Đổi giao diện sáng/tối">Sáng / Tối</button>
+    </div>
+    <nav role="tablist" id="tabs"></nav>
+  </div>
+</header>
+<main class="wrap" id="view"></main>
+
+<script>
+const DATA = /*__DATA__*/null;
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const STRATS = ["A", "B", "C"];
+const STRAT_NAME = { A: "Cố định 500/50", B: "Theo đoạn ≤1000", C: "B + lọc chương" };
+const tr = (strategy, id) => DATA.traces.find(t => t.strategy === strategy && t.question_id === id);
+const fmt = (n, d = 1) => Number(n).toLocaleString("vi-VN", { maximumFractionDigits: d });
+const dot = s => `<span class="sdot ${s}" title="${esc(STRAT_NAME[s])}">${s}</span>`;
+const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+/* Highlight the evidence quote inside a chunk, tolerant to curly quotes and whitespace. */
+function quoteRegex(q) {
+  const parts = q.trim().split(/\s+/).map(w => w.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/['’‘]/g, "['’‘]").replace(/["“”]/g, '["“”]'));
+  return new RegExp(parts.join("\\s+"), "i");
+}
+function highlight(text, quote) {
+  const m = quoteRegex(quote).exec(text);
+  if (!m) return esc(text);
+  return esc(text.slice(0, m.index)) + "<mark>" + esc(m[0]) + "</mark>" + esc(text.slice(m.index + m[0].length));
+}
+
+/* ---------- state ---------- */
+const store = {
+  get() { try { return JSON.parse(localStorage.getItem("rag-dashboard-labels") || "{}"); } catch { return {}; } },
+  set(v) { try { localStorage.setItem("rag-dashboard-labels", JSON.stringify(v)); } catch { /* storage unavailable */ } },
+};
+let labels = store.get();
+const ui = { tab: "overview", qSplit: "all", qShow: "all", openQ: null, page: DATA.pages[0].page, manual: "coherence", reveal: false };
+
+/* ---------- header ---------- */
+const TABS = [["overview", "Tổng quan"], ["questions", "Câu hỏi & truy vết"], ["chunking", "Chunking"], ["manual", "Chấm thủ công"]];
+function renderHeader() {
+  const r = DATA.run;
+  $("#runline").textContent = `${r.embedding_model} (${r.dimensions} chiều) · chạy ${r.started_utc.replace("T", " ").replace("+00:00", " UTC")} · ${DATA.questions.length} câu hỏi · top-${r.top_k}`;
+  $("#tabs").innerHTML = TABS.map(([id, name]) =>
+    `<button role="tab" aria-selected="${ui.tab === id}" data-tab="${id}">${name}</button>`).join("");
+}
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("[data-tab]"); if (b) { ui.tab = b.dataset.tab; render(); window.scrollTo(0, 0); } });
+$("#theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark"; render();
+});
+
+/* ---------- overview ---------- */
+function barChart(split) {
+  const W = 520, H = 250, L = 38, R = 10, T = 14, B = 44;
+  const groups = [["hit1", "Hit@1"], ["hit3", "Hit@3"]];
+  const gw = (W - L - R) / groups.length, bw = 44, gap = 10;
+  const y = v => T + (H - T - B) * (1 - v);
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="bars" role="img" aria-label="Hit@1 và Hit@3 tập ${split}" width="100%">`;
+  for (const tick of [0, .25, .5, .75, 1]) {
+    s += `<line x1="${L}" x2="${W - R}" y1="${y(tick)}" y2="${y(tick)}" stroke="${cssVar("--line")}" stroke-width="1"/>`
+      + `<text x="${L - 6}" y="${y(tick) + 4}" text-anchor="end">${tick * 100}%</text>`;
+  }
+  groups.forEach(([key, name], gi) => {
+    const x0 = L + gi * gw + (gw - (3 * bw + 2 * gap)) / 2;
+    STRATS.forEach((st, si) => {
+      const m = DATA.metrics[st][split], v = m[key] / m.n, x = x0 + si * (bw + gap);
+      s += `<rect x="${x}" y="${y(v)}" width="${bw}" height="${y(0) - y(v)}" rx="4" fill="${cssVar("--" + st.toLowerCase())}"><title>${st}: ${m[key]}/${m.n}</title></rect>`
+        + `<text class="val" x="${x + bw / 2}" y="${y(v) - 5}" text-anchor="middle">${m[key]}/${m.n}</text>`
+        + `<text x="${x + bw / 2}" y="${H - B + 15}" text-anchor="middle">${st}</text>`;
+    });
+    s += `<text x="${L + gi * gw + gw / 2}" y="${H - 8}" text-anchor="middle" style="font-weight:600;fill:${cssVar("--ink")}">${name}</text>`;
+  });
+  return s + "</svg>";
+}
+
+function renderOverview() {
+  const r = DATA.run, st = r.chunk_stats, ing = r.ingestion;
+  const missRows = STRATS.map(s => {
+    const items = DATA.traces.filter(t => t.strategy === s && !t.hit3);
+    return `<tr><td>${dot(s)}</td><td>${items.length ? items.map(t =>
+      `<button class="pill ${t.evidence_possibly_split ? "warn" : "miss"}" style="border:0" data-open="${t.question_id}" title="${t.evidence_possibly_split ? "Evidence có thể bị cắt qua nhiều chunk" : t.gold_page_in_top3 ? "Đúng trang nhưng chunk thiếu evidence" : "Không có chunk đúng trang trong top-3"}">${t.question_id}${t.evidence_possibly_split ? " · cắt" : t.gold_page_in_top3 ? " · đúng trang" : ""}</button>`).join(" ") : '<span class="muted">Không có</span>'}</td></tr>`;
+  }).join("");
+  const comp = STRATS.map(s => {
+    const f = d => { const m = DATA.metrics[s][d]; return m.filter_questions ? `${m.filter_compliant}/${m.filter_questions}` : "N/A"; };
+    return `<tr><td>${dot(s)} ${esc(STRAT_NAME[s])}</td><td>${f("dev")}</td><td>${f("test")}</td></tr>`;
+  }).join("");
+  $("#view").innerHTML = `
+  <section class="grid kpis">
+    <div class="card kpi"><div class="l">Trang nội dung đã nạp</div><div class="v">${ing.pages_loaded}</div><div class="d">${fmt(ing.total_chars, 0)} ký tự · ${ing.removed_furniture_lines} dòng chân trang bị loại</div></div>
+    <div class="card kpi"><div class="l">Số chunk</div><div class="v">${st.A.chunks} <span class="muted" style="font-weight:400">/</span> ${st.B.chunks}</div><div class="d">A (cố định) / B và C (theo đoạn)</div></div>
+    <div class="card kpi"><div class="l">Embedding</div><div class="v">${fmt(r.embedding_tokens, 0)}</div><div class="d">token · ${r.embedding_requests} request · ≈ $${r.estimated_cost_usd.toFixed(4)}</div></div>
+    <div class="card kpi"><div class="l">Thời gian embed + lưu</div><div class="v">${fmt(r.embed_and_store_seconds.A + r.embed_and_store_seconds.B)}s</div><div class="d">A ${r.embed_and_store_seconds.A}s · B ${r.embed_and_store_seconds.B}s · DB ${r.db_rows_after_run.A}+${r.db_rows_after_run.B} dòng</div></div>
+  </section>
+  <section class="card">
+    <h2>Độ chính xác truy xuất</h2>
+    <div class="sub">Hit@1: chunk xếp đầu thuộc đúng trang gold và chứa đủ evidence. Hit@3: có ít nhất một chunk như vậy trong top-3.</div>
+    <div class="legend" style="margin-top:10px">${STRATS.map(s => `<span>${dot(s)} ${esc(STRAT_NAME[s])}</span>`).join("")}</div>
+    <div class="grid two" style="margin-top:8px">
+      <div><h3>Dev <span class="muted">· ${DATA.metrics.A.dev.n} câu</span></h3>${barChart("dev")}</div>
+      <div><h3>Test <span class="muted">· ${DATA.metrics.A.test.n} câu</span></h3>${barChart("test")}</div>
+    </div>
+    <div class="note" style="margin-top:6px">Tập test chỉ có ${DATA.metrics.A.test.n} câu: lệch một câu là ${fmt(100 / DATA.metrics.A.test.n)} điểm phần trăm. Đây là kết quả minh hoạ trên một corpus, không đủ để kết luận chiến lược nào tốt nhất nói chung.</div>
+  </section>
+  <section class="grid two">
+    <div class="card"><h2>Câu trượt Hit@3</h2><div class="sub">Bấm vào mã câu để xem top-3 chi tiết.</div>
+      <div class="scroll"><table><tbody>${missRows}</tbody></table></div>
+      <div class="cell-hint" style="margin-top:8px"><span class="pill warn">cắt</span> evidence nằm ở ranh giới hai chunk · <span class="pill miss">đúng trang</span> đúng trang nhưng chunk thiếu evidence</div></div>
+    <div class="card"><h2>Tuân thủ filter</h2><div class="sub">Câu có filter: top-3 chỉ chứa chunk thuộc chương được yêu cầu.</div>
+      <div class="scroll"><table><thead><tr><th>Cấu hình</th><th>Dev</th><th>Test</th></tr></thead><tbody>${comp}</tbody></table></div>
+      <div class="cell-hint" style="margin-top:8px">B không áp filter nên đây là phép so sánh trực tiếp với C. Test chỉ có ${DATA.metrics.A.test.filter_questions} câu có filter.</div></div>
+  </section>
+  <section class="card"><h2>Cấu hình ba chiến lược</h2>
+    <div class="scroll"><table><thead><tr><th>Cấu hình</th><th>Chia chunk</th><th>Số chunk</th><th>Độ dài (min / trung vị / TB / max)</th><th>Lọc metadata</th></tr></thead><tbody>
+    <tr><td>${dot("A")} A</td><td>Cửa sổ ${r.configs.A.size} ký tự, overlap ${r.configs.A.overlap}</td><td>${st.A.chunks}</td><td>${st.A.min} / ${st.A.median} / ${st.A.mean} / ${st.A.max}</td><td>Không</td></tr>
+    <tr><td>${dot("B")} B</td><td>Theo đoạn, tối đa ${r.configs.B.max_size} ký tự</td><td>${st.B.chunks}</td><td>${st.B.min} / ${st.B.median} / ${st.B.mean} / ${st.B.max}</td><td>Không</td></tr>
+    <tr><td>${dot("C")} C</td><td>Giống B (dùng lại chunk của B)</td><td>${st.B.chunks}</td><td>như B</td><td>Chương, chỉ khi câu hỏi có filter</td></tr>
+    </tbody></table></div></section>`;
+}
+
+/* ---------- questions ---------- */
+function resultPill(t) {
+  if (t.hit1) return `<span class="pill hit">✓ Hit@1</span>`;
+  if (t.hit3) return `<span class="pill hit">✓ Hit@3 · hạng ${t.first_hit_rank}</span>`;
+  if (t.evidence_possibly_split) return `<span class="pill warn">✗ evidence bị cắt</span>`;
+  if (t.gold_page_in_top3) return `<span class="pill miss">✗ đúng trang, thiếu evidence</span>`;
+  return `<span class="pill miss">✗ không thấy</span>`;
+}
+const lineRange = m => m && m.line_start != null
+  ? `<span title="Số dòng trong văn bản trích xuất từ trang (tổng ${m.page_lines} dòng)"><b>dòng ${m.line_start}–${m.line_end}</b> / ${m.page_lines}</span>` : "";
+function hitCards(t) {
+  return t.hits.map((h, i) => {
+    const ph = t.per_hit[i], m = h.metadata || {};
+    return `<div class="hitcard ${ph.hit ? "good" : ""}">
+      <div class="hitmeta"><b>#${ph.rank}</b><span>trang ${h.page}${h.page === t.gold_page ? " (gold)" : ""}</span>${lineRange(m)}<span>score ${h.score.toFixed(3)}</span>
+      ${m.chapter ? `<span>chương ${m.chapter}</span>` : ""}${ph.hit ? '<span class="pill hit">đủ evidence</span>' : ph.source_page_match ? '<span class="pill warn">đúng trang</span>' : ""}</div>
+      <div class="hitmeta mono">${esc(h.chunk_id)}${m.section ? " · " + esc(m.section) : ""}</div>
+      <div class="chunk">${highlight(h.text, t.evidence_quote)}</div></div>`;
+  }).join("");
+}
+function renderQuestions() {
+  const qs = DATA.questions.filter(q => ui.qSplit === "all" || q.split === ui.qSplit).filter(q => {
+    const ts = STRATS.map(s => tr(s, q.id));
+    if (ui.qShow === "miss") return ts.some(t => !t.hit3);
+    if (ui.qShow === "diff") return new Set(ts.map(t => t.hit1 + "/" + t.hit3)).size > 1;
+    if (ui.qShow === "filter") return !!q.filter;
+    return true;
+  });
+  const chip = (group, val, label) => `<button class="chip" data-${group}="${val}" aria-pressed="${ui[group === "qs" ? "qSplit" : "qShow"] === val}">${label}</button>`;
+  const rows = qs.map(q => {
+    const ts = STRATS.map(s => tr(s, q.id));
+    const open = ui.openQ === q.id;
+    return `<tr class="qrow" data-q="${q.id}" tabindex="0" aria-expanded="${open}">
+      <td>${q.id}</td><td><span class="pill neutral">${q.split}</span></td>
+      <td>${esc(q.question)}${q.filter ? ` <span class="pill neutral" title="Filter được cung cấp trước làm ngữ cảnh người dùng">lọc: chương ${q.filter.chapter}</span>` : ""}</td>
+      <td class="muted">tr. ${q.gold_page}</td>${ts.map(t => `<td>${resultPill(t)}</td>`).join("")}</tr>
+      ${open ? `<tr class="detail"><td colspan="7">
+        <div class="quote"><div class="cell-hint">Evidence gold · trang ${q.gold_page}</div>${esc(q.evidence_quote)}</div>
+        <div class="muted" style="margin:8px 0 12px">Đáp án mong đợi: ${esc(q.expected_answer || "")}</div>
+        <div class="cols3">${STRATS.map(s => { const t = tr(s, q.id);
+          return `<div><div style="margin-bottom:8px;display:flex;gap:8px;align-items:center">${dot(s)} <b>${esc(STRAT_NAME[s])}</b> ${resultPill(t)}</div>
+          ${t.applied_filter ? `<div class="cell-hint" style="margin-bottom:6px">Đã lọc: chương ${t.applied_filter.chapter}</div>` : ""}${hitCards(t)}</div>`; }).join("")}</div></td></tr>` : ""}`;
+  }).join("");
+  $("#view").innerHTML = `<section class="card">
+    <h2>Câu hỏi & truy vết top-3</h2><div class="sub">Bấm một dòng để xem chunk được trả về. Phần được tô vàng là evidence gold nằm trong chunk. Mỗi chunk ghi rõ trang và khoảng dòng của nó.</div>
+    <div class="chips" style="margin:12px 0">${chip("qs", "all", "Tất cả")}${chip("qs", "dev", "Dev")}${chip("qs", "test", "Test")}
+      <span class="muted" style="margin-inline:6px">|</span>
+      ${chip("qshow", "all", "Mọi câu")}${chip("qshow", "miss", "Có cấu hình trượt")}${chip("qshow", "diff", "Khác nhau giữa cấu hình")}${chip("qshow", "filter", "Câu có filter")}
+      <span class="muted">${qs.length} câu</span></div>
+    <div class="scroll"><table><thead><tr><th>ID</th><th>Tập</th><th>Câu hỏi</th><th>Gold</th><th>${dot("A")} A</th><th>${dot("B")} B</th><th>${dot("C")} C</th></tr></thead><tbody>${rows || '<tr><td colspan="7" class="muted">Không có câu nào khớp bộ lọc.</td></tr>'}</tbody></table></div></section>`;
+}
+
+/* ---------- chunking ---------- */
+function histogram() {
+  const bins = 10, W = 560, H = 220, L = 38, R = 8, T = 12, B = 34;
+  const count = { A: Array(bins).fill(0), B: Array(bins).fill(0) };
+  DATA.pages.forEach(p => ["A", "B"].forEach(s => p[s].forEach(c => { count[s][Math.min(bins - 1, Math.floor(c.text.length / 100))]++; })));
+  const max = Math.max(...count.A, ...count.B), top = Math.ceil(max / 50) * 50;
+  const y = v => T + (H - T - B) * (1 - v / top), gw = (W - L - R) / bins, bw = gw / 2 - 3;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="bars" width="100%" style="max-width:680px;display:block" role="img" aria-label="Phân bố độ dài chunk">`;
+  for (let v = 0; v <= top; v += top / 4) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="${cssVar("--line")}"/><text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${Math.round(v)}</text>`;
+  for (let i = 0; i < bins; i++) {
+    ["A", "B"].forEach((st, k) => {
+      const x = L + i * gw + 3 + k * (bw + 0), v = count[st][i];
+      s += `<rect x="${x}" y="${y(v)}" width="${bw}" height="${y(0) - y(v)}" rx="2" fill="${cssVar("--" + st.toLowerCase())}"><title>${st}: ${v} chunk dài ${i * 100}–${i * 100 + 99} ký tự</title></rect>`;
+    });
+    s += `<text x="${L + i * gw + gw / 2}" y="${H - 16}" text-anchor="middle">${i * 100}${i === bins - 1 ? "+" : ""}</text>`;
+  }
+  return s + `<text x="${(L + W) / 2}" y="${H - 2}" text-anchor="middle">độ dài chunk (ký tự)</text></svg>`;
+}
+const pageQuestions = n => DATA.questions.filter(q => q.gold_page === n);
+function chunkColumn(p, s) {
+  const qs = pageQuestions(p.page);
+  return p[s].map((c, i) => {
+    const containing = qs.filter(q => quoteRegex(q.evidence_quote).test(c.text));
+    return `<div class="hitcard"><div class="hitmeta"><b>${s}${i + 1}</b><span>${c.text.length} ký tự</span>${c.line_start != null ? `<span><b>dòng ${c.line_start}–${c.line_end}</b> / ${p.lines.length ? p.lines[p.lines.length - 1][0] : ""}</span>` : ""}${c.section ? `<span>${esc(c.section)}</span>` : ""}
+      ${containing.map(q => `<span class="pill hit">chứa evidence ${q.id}</span>`).join("")}</div><div class="chunk">${containing.length ? highlight(c.text, containing[0].evidence_quote) : esc(c.text)}</div></div>`;
+  }).join("");
+}
+function renderChunking() {
+  const p = DATA.pages.find(x => x.page === ui.page), idx = DATA.pages.indexOf(p), st = DATA.run.chunk_stats;
+  const qs = pageQuestions(p.page);
+  const splits = qs.filter(q => {
+    const re = quoteRegex(q.evidence_quote);
+    return re.test(p.text) && !p.A.some(c => re.test(c.text)) ? "A" : false;
+  });
+  const splitB = qs.filter(q => { const re = quoteRegex(q.evidence_quote); return re.test(p.text) && !p.B.some(c => re.test(c.text)); });
+  const statCard = s => `<div class="card kpi"><div class="l">${dot(s)} ${esc(STRAT_NAME[s === "A" ? "A" : "B"])}</div><div class="v">${st[s].chunks} chunk</div><div class="d">trung vị ${st[s].median} · TB ${st[s].mean} · min ${st[s].min} · max ${st[s].max} ký tự</div></div>`;
+  $("#view").innerHTML = `
+  <section class="grid two">${statCard("A")}${statCard("B")}</section>
+  <section class="card"><h2>Phân bố độ dài chunk</h2>
+    <div class="sub">A bị chặn ở 500 ký tự nên dồn vào cột 400–500; B trải rộng hơn vì cắt theo đoạn.</div>
+    <div class="legend" style="margin-top:8px"><span>${dot("A")} A</span><span>${dot("B")} B</span></div>${histogram()}</section>
+  <section class="card"><h2>So sánh cách cắt trên từng trang</h2>
+    <div class="sub">Chọn một trang để xem A và B cắt cùng một nội dung thế nào.</div>
+    <div class="pagebar" style="margin:12px 0">
+      <button class="btn" data-pg="-1" ${idx === 0 ? "disabled" : ""}>← Trước</button>
+      <select id="pgsel" aria-label="Chọn trang">${DATA.pages.map(x => `<option value="${x.page}" ${x.page === p.page ? "selected" : ""}>Trang ${x.page} · chương ${x.chapter}${pageQuestions(x.page).length ? " · " + pageQuestions(x.page).map(q => q.id).join(",") : ""}</option>`).join("")}</select>
+      <button class="btn" data-pg="1" ${idx === DATA.pages.length - 1 ? "disabled" : ""}>Sau →</button>
+      <span class="muted">${esc(p.chapter_title)} · mục: ${esc(p.section)}</span></div>
+    ${qs.length ? `<div class="note" style="margin-bottom:12px">Trang này là gold của ${qs.map(q => q.id).join(", ")}.
+      ${splits.length ? ` A cắt evidence của ${splits.map(q => q.id).join(", ")} qua nhiều chunk.` : " A giữ evidence trong một chunk."}
+      ${splitB.length ? ` B cắt evidence của ${splitB.map(q => q.id).join(", ")}.` : " B giữ evidence trong một chunk."}</div>` : ""}
+    <details style="margin-bottom:12px"><summary class="cell-hint" style="cursor:pointer">Văn bản gốc của trang ${p.page}, đánh số dòng (${p.lines.length} dòng có chữ)</summary>
+      <div class="mono scroll" style="margin-top:8px;max-height:360px;overflow:auto;background:var(--surface2);border-radius:8px;padding:10px">${p.lines.map(l =>
+        `<div style="${l[2] ? "" : "opacity:.5;text-decoration:line-through"}"><span class="muted">${String(l[0]).padStart(3, " ")}</span>  ${esc(l[1])}</div>`).join("")}</div>
+      <div class="cell-hint" style="margin-top:6px">Dòng gạch ngang là chân trang/nhãn bị loại khi chuẩn hoá. Số dòng đếm trên văn bản trích xuất từ PDF, gần với dòng nhìn thấy trên trang.</div></details>
+    <div class="cols3" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
+      <div><h3 style="margin-bottom:8px">${dot("A")} A · ${p.A.length} chunk</h3>${chunkColumn(p, "A")}</div>
+      <div><h3 style="margin-bottom:8px">${dot("B")} B / C · ${p.B.length} chunk</h3>${chunkColumn(p, "B")}</div></div></section>`;
+}
+
+/* ---------- manual labelling ---------- */
+function label(kind, key, field) { return ((labels[kind] || {})[key] || {})[field] ?? ""; }
+function setLabel(kind, key, field, value) {
+  labels[kind] = labels[kind] || {}; labels[kind][key] = labels[kind][key] || {}; labels[kind][key][field] = value; store.set(labels);
+}
+function seedValue(kind, key, field, csvValue) {
+  const v = label(kind, key, field);
+  return v !== "" ? v : (csvValue ?? "");
+}
+const csvCell = v => { const s = String(v ?? ""); return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+const toCsv = (head, rows) => "﻿" + [head, ...rows].map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
+
+function coherenceItems() {
+  const rows = DATA.manual.coherence, byPos = {};
+  rows.forEach(r => (byPos[r.position] = byPos[r.position] || []).push(r));
+  return Object.keys(byPos).map(Number).sort((a, b) => a - b).map(pos => {
+    const pair = byPos[pos];
+    const first = (pos * 7 + 3) % 2 === 0 ? "A" : "B";   // fixed pseudo-random order, so the label does not leak
+    return { pos, source: pair[0].source_position, rows: [...pair].sort((x, y) => (x.strategy === first ? -1 : 1) - (y.strategy === first ? -1 : 1)) };
+  });
+}
+function scoreButtons(kind, key, field, values) {
+  const cur = seedValue(kind, key, field, "");
+  return `<span class="score" role="group">${values.map(v => `<button type="button" aria-pressed="${String(cur) === String(v)}" data-set="${kind}|${key}|${field}|${v}">${v}</button>`).join("")}</span>`;
+}
+function progress(done, total) { return `<div class="progress" aria-hidden="true"><i style="width:${total ? 100 * done / total : 0}%"></i></div><div class="cell-hint">${done}/${total} đã chấm</div>`; }
+
+function renderManual() {
+  const tabs = [["coherence", "Coherence"], ["metadata", "Metadata"], ["grounding", "Grounding"]];
+  let body = "";
+  if (ui.manual === "coherence") {
+    const items = coherenceItems(); let done = 0;
+    const cards = items.map(it => {
+      const inner = it.rows.map((r, k) => {
+        const key = `${r.position}|${r.strategy}`, sc = seedValue("coherence", key, "score", r["coherence(0-2)"]);
+        if (sc !== "") done++;
+        return `<div class="hitcard"><div class="hitmeta"><b>Chunk ${k + 1}</b>${ui.reveal ? dot(r.strategy) : ""}<span>${r.text.length} ký tự</span>${ui.reveal ? `<span class="mono">${esc(r.chunk_id)}</span>` : ""}</div>
+          <div class="chunk">${esc(r.text)}</div>
+          <div style="margin-top:10px;display:grid;gap:8px"><div>${scoreButtons("coherence", key, "score", [0, 1, 2])}</div>
+          <textarea data-text="coherence|${key}|reason" placeholder="Lý do chấm" aria-label="Lý do">${esc(seedValue("coherence", key, "reason", r.reason))}</textarea></div></div>`;
+      }).join("");
+      return `<div class="item"><div><b>Vị trí ${it.pos}</b> <span class="muted mono">${esc(it.source)}</span></div><div class="cols3" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">${inner}</div></div>`;
+    }).join("");
+    body = `<div class="sub">0 = bị cắt giữa ý/thiếu chủ thể làm không hiểu · 1 = hiểu một phần, thiếu ngữ cảnh · 2 = tự hiểu được và giữ trọn ý. Cả hai chunk cùng phủ một vị trí nguồn. Nhãn chiến lược đang ẩn để chấm không thiên vị.</div>
+      <div class="chips" style="margin:12px 0"><button class="chip" data-reveal aria-pressed="${ui.reveal}">${ui.reveal ? "Đang hiện A/B" : "Hiện A/B (sau khi chấm xong)"}</button></div>${progress(done, items.length * 2)}${cards}`;
+    if (done === items.length * 2) {
+      const avg = s => { const v = DATA.manual.coherence.filter(r => r.strategy === s).map(r => Number(seedValue("coherence", `${r.position}|${r.strategy}`, "score", r["coherence(0-2)"]))); return (v.reduce((a, b) => a + b, 0) / v.length).toFixed(2); };
+      body += `<div class="note" style="margin-top:16px">Điểm trung bình coherence: A ${avg("A")}/2 · B ${avg("B")}/2 (10 vị trí mỗi cấu hình).</div>`;
+    }
+    body += exportBar("coherence");
+  } else if (ui.manual === "metadata") {
+    const rows = DATA.manual.metadata; let done = 0;
+    const cards = rows.map((r, i) => {
+      const key = `${r.strategy}|${r.question_id}|${r.chunk_id}`, v = seedValue("metadata", key, "ok", r["metadata_correct_and_complete(0/1)"]);
+      if (v !== "") done++;
+      return `<div class="item"><div class="hitmeta">${dot(r.strategy)}<b>${r.question_id}</b><span class="mono">${esc(r.chunk_id)}</span></div>
+        <table><tbody><tr><td class="muted">document_id</td><td>${esc(r.document_id)}</td><td class="muted">page</td><td>${r.page}</td><td class="muted">gold page</td><td>${r.gold_page}</td></tr>
+        <tr><td class="muted">dòng</td><td colspan="5">${r.line_start ? `${r.line_start}–${r.line_end}` : "—"}</td></tr>
+        <tr><td class="muted">chapter</td><td>${esc(r.chapter)}</td><td class="muted">section</td><td colspan="3">${esc(r.section)}</td></tr></tbody></table>
+        <div>${scoreButtons("metadata", key, "ok", [1, 0])} <span class="cell-hint">1 = đủ và đúng so với PDF · 0 = sai/thiếu</span></div>
+        <textarea data-text="metadata|${key}|note" placeholder="Ghi lỗi nếu có" aria-label="Ghi chú lỗi">${esc(seedValue("metadata", key, "note", r.error_note))}</textarea></div>`;
+    }).join("");
+    body = `<div class="sub">Đối chiếu trang, chương và mục của từng chunk top-3 (câu test) với PDF gốc. Mở đúng trang vật lý trong PDF để kiểm tra.</div><div style="margin-top:12px">${progress(done, rows.length)}</div>${cards}${exportBar("metadata")}`;
+  } else {
+    const rows = DATA.manual.grounding; let done = 0;
+    const cards = rows.map(r => {
+      const key = `${r.strategy}|${r.question_id}`, v = seedValue("grounding", key, "score", r["grounding(0-2)"]);
+      if (v !== "") done++;
+      const t = tr(r.strategy, r.question_id);
+      return `<div class="item"><div class="hitmeta">${dot(r.strategy)}<b>${r.question_id}</b><span>${esc(r.question)}</span></div>
+        <div class="quote"><div class="cell-hint">Evidence gold</div>${esc(r.gold_evidence)}</div>
+        <details><summary class="cell-hint" style="cursor:pointer">Xem top-3 (${t.hits.length} chunk)</summary><div style="margin-top:8px">${hitCards(t)}</div></details>
+        <div>${scoreButtons("grounding", key, "score", [0, 1, 2])} <span class="cell-hint">0 = không có bằng chứng · 1 = có nhưng thiếu điều kiện · 2 = đủ để trả lời và truy nguồn</span></div>
+        <textarea data-text="grounding|${key}|reason" placeholder="Lý do chấm" aria-label="Lý do">${esc(seedValue("grounding", key, "reason", r.reason))}</textarea></div>`;
+    }).join("");
+    body = `<div class="sub">Chấm top-3 của từng câu test: có đủ bằng chứng để trả lời và truy được nguồn không. Đây chỉ đánh giá evidence truy xuất, không phải độ chính xác câu trả lời của LLM.</div><div style="margin-top:12px">${progress(done, rows.length)}</div>${cards}${exportBar("grounding")}`;
+  }
+  $("#view").innerHTML = `<section class="card"><div class="chips" style="margin-bottom:14px">${tabs.map(([id, n]) =>
+    `<button class="chip" data-manual="${id}" aria-pressed="${ui.manual === id}">${n}</button>`).join("")}</div>
+    <div class="note" style="margin-bottom:14px">Bạn tự chấm; ô điểm để trống cho đến khi bạn chọn. Điểm lưu trong trình duyệt này. Bấm "Tải CSV" rồi chép đè vào thư mục results để nộp. Ghi rõ người chấm là tác giả và nguy cơ thiên lệch trong báo cáo.</div>${body}</section>`;
+}
+function exportBar(kind) {
+  return `<div class="chips" style="margin-top:20px"><button class="btn primary" data-export="${kind}">Tải CSV</button><button class="btn" data-copy="${kind}">Chép CSV</button><span class="cell-hint" id="exp-${kind}"></span></div>`;
+}
+function buildCsv(kind) {
+  if (kind === "coherence") return ["manual_coherence.csv", toCsv(["position", "source_position", "strategy", "chunk_id", "section", "text", "coherence(0-2)", "reason"],
+    DATA.manual.coherence.map(r => { const k = `${r.position}|${r.strategy}`; return [r.position, r.source_position, r.strategy, r.chunk_id, r.section, r.text, seedValue("coherence", k, "score", r["coherence(0-2)"]), seedValue("coherence", k, "reason", r.reason)]; }))];
+  if (kind === "metadata") return ["manual_metadata.csv", toCsv(["strategy", "question_id", "chunk_id", "document_id", "page", "chapter", "section", "line_start", "line_end", "gold_page", "metadata_correct_and_complete(0/1)", "error_note"],
+    DATA.manual.metadata.map(r => { const k = `${r.strategy}|${r.question_id}|${r.chunk_id}`; return [r.strategy, r.question_id, r.chunk_id, r.document_id, r.page, r.chapter, r.section, r.line_start, r.line_end, r.gold_page, seedValue("metadata", k, "ok", r["metadata_correct_and_complete(0/1)"]), seedValue("metadata", k, "note", r.error_note)]; }))];
+  return ["manual_grounding.csv", toCsv(["strategy", "question_id", "question", "gold_evidence", "grounding(0-2)", "reason"],
+    DATA.manual.grounding.map(r => { const k = `${r.strategy}|${r.question_id}`; return [r.strategy, r.question_id, r.question, r.gold_evidence, seedValue("grounding", k, "score", r["grounding(0-2)"]), seedValue("grounding", k, "reason", r.reason)]; }))];
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const t = e.target;
+  let el;
+  if ((el = t.closest("[data-open]"))) { ui.tab = "questions"; ui.qSplit = "all"; ui.qShow = "all"; ui.openQ = el.dataset.open; render(); return; }
+  if ((el = t.closest("[data-q]"))) { ui.openQ = ui.openQ === el.dataset.q ? null : el.dataset.q; render(); return; }
+  if ((el = t.closest("[data-qs]"))) { ui.qSplit = el.dataset.qs; render(); return; }
+  if ((el = t.closest("[data-qshow]"))) { ui.qShow = el.dataset.qshow; render(); return; }
+  if ((el = t.closest("[data-pg]"))) { const i = DATA.pages.findIndex(p => p.page === ui.page) + Number(el.dataset.pg); ui.page = DATA.pages[Math.max(0, Math.min(DATA.pages.length - 1, i))].page; render(); return; }
+  if ((el = t.closest("[data-manual]"))) { ui.manual = el.dataset.manual; render(); return; }
+  if (t.closest("[data-reveal]")) { ui.reveal = !ui.reveal; render(); return; }
+  if ((el = t.closest("[data-set]"))) {
+    const [kind, key, field, value] = el.dataset.set.split("|").length > 4 ? [el.dataset.set.split("|")[0], el.dataset.set.split("|").slice(1, -2).join("|"), el.dataset.set.split("|").slice(-2)[0], el.dataset.set.split("|").slice(-1)[0]] : el.dataset.set.split("|");
+    setLabel(kind, key, field, value); const y = window.scrollY; render(); window.scrollTo(0, y); return;
+  }
+  if ((el = t.closest("[data-export]"))) {
+    const [name, csv] = buildCsv(el.dataset.export);
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" })); a.download = name; a.click();
+    $("#exp-" + el.dataset.export).textContent = "Đã tạo " + name; return;
+  }
+  if ((el = t.closest("[data-copy]"))) {
+    const csv = buildCsv(el.dataset.copy)[1], note = $("#exp-" + el.dataset.copy);
+    (navigator.clipboard ? navigator.clipboard.writeText(csv) : Promise.reject()).then(() => note.textContent = "Đã chép vào clipboard", () => note.textContent = "Trình duyệt chặn clipboard; dùng Tải CSV");
+  }
+});
+document.addEventListener("keydown", e => { if ((e.key === "Enter" || e.key === " ") && e.target.matches?.(".qrow")) { e.preventDefault(); e.target.click(); } });
+document.addEventListener("change", e => { if (e.target.id === "pgsel") { ui.page = Number(e.target.value); render(); } });
+document.addEventListener("input", e => {
+  const el = e.target.closest?.("[data-text]"); if (!el) return;
+  const parts = el.dataset.text.split("|"), field = parts.pop(), kind = parts.shift();
+  setLabel(kind, parts.join("|"), field, el.value);
+});
+
+function render() {
+  renderHeader();
+  ({ overview: renderOverview, questions: renderQuestions, chunking: renderChunking, manual: renderManual })[ui.tab]();
+}
+render();
+</script>
+</body>
+</html>

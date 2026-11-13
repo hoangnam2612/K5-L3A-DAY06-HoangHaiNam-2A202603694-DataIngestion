@@ -1,4 +1,4 @@
-strategy,chunking,chunk_size,overlap,metadata,filter,vectorizer,hypothesis,dev_hit1,dev_hit3,test_hit1,test_hit3,notes
-A,,,,,,,,,,,,
-B,,,,,,,,,,,,
-C,,,,,,,,,,,,
+﻿strategy,chunking,chunk_size,overlap,metadata,filter,vectorizer,hypothesis,dev_hit1,dev_hit3,test_hit1,test_hit3,notes
+A,fixed_size,500,50,"document_id,source,page,chapter,section",none,text-embedding-3-small (1536d),,11/18,14/18,3/6,4/6,453 chunks (store A); run 2026-11-13T10:02:49+00:00
+B,by_paragraph,1000,0,"document_id,source,page,chapter,section",none,text-embedding-3-small (1536d),,14/18,17/18,4/6,6/6,282 chunks (store B); run 2026-11-13T10:02:49+00:00
+C,by_paragraph,1000,0,"document_id,source,page,chapter,section",chapter (only on questions that supply one),text-embedding-3-small (1536d),,14/18,17/18,4/6,6/6,282 chunks (store B); run 2026-11-13T10:02:49+00:00

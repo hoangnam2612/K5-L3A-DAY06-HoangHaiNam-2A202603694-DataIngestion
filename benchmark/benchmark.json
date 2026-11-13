@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "corpus": "soc3e (OpenStax Introduction to Sociology 3e), Chapters 1-3, physical pages per data/manifest.json",
+    "created_before_retrieval": true,
+    "split_method": "Fixed by hand before any chunking, embedding or retrieval was run. 18 dev / 6 test. Test spans all 3 chapters and several question types (direct, paraphrase, conditional/numeric, filter). No question is edited after seeing retrieval results.",
+    "page_convention": "gold_page = 1-based physical PDF page (not the printed page number).",
+    "filter_semantics": "filter = {\"chapter\": N} is an ASSUMED user-context input supplied before retrieval (user says which chapter they are reading). Questions never contain the gold page, and the filter value is not derived from the gold answer text. Configurations A and B ignore filter; C applies it only when filter is non-null.",
+    "leakage_risks": [
+      "Dev and test questions come from the same book and chapters, so neighbouring chunks can serve both splits.",
+      "The author wrote the questions after reading the full text, so wording may echo source phrasing (lexical overlap favours keyword-like matching).",
+      "Only 6 test questions: one question changes Hit@k by about 17 percentage points."
+    ],
+    "filter_distractors": "For filter questions, distractor_pages lists look-alike pages in another chapter that discuss the same topic but do NOT contain the gold evidence."
+  },
+  "questions": [
+    {
+      "id": "d01", "split": "dev", "type": "direct",
+      "question": "What German term did Weber and Dilthey introduce for trying to understand a social world in a deep way, from an insider's point of view?",
+      "expected_answer": "Verstehen",
+      "gold_source_id": "soc3e", "gold_page": 26,
+      "evidence_quote": "introduced the concept of verstehen, a German word that means to understand in a deep way",
+      "filter": null
+    },
+    {
+      "id": "d02", "split": "dev", "type": "paraphrase",
+      "question": "Which English philosopher wrote the first book that had the word sociology in its title, and in what year?",
+      "expected_answer": "Herbert Spencer, in 1873 (The Study of Sociology)",
+      "gold_source_id": "soc3e", "gold_page": 25,
+      "evidence_quote": "In 1873, the English philosopher Herbert Spencer published The Study of Sociology",
+      "filter": null
+    },
+    {
+      "id": "d03", "split": "dev", "type": "conditional",
+      "question": "How do manifest functions differ from latent functions of a social process?",
+      "expected_answer": "Manifest functions are sought or anticipated consequences; latent functions are the unsought consequences.",
+      "gold_source_id": "soc3e", "gold_page": 30,
+      "evidence_quote": "Manifest functions are the consequences of a social process that are sought or anticipated, while latent functions are the unsought consequences of a social process.",
+      "filter": null
+    },
+    {
+      "id": "d04", "split": "dev", "type": "direct",
+      "question": "In a hypothesis, which variable is the cause of the change and which is the effect?",
+      "expected_answer": "The independent variable is the cause of the change; the dependent variable is the effect, or the thing that is changed.",
+      "gold_source_id": "soc3e", "gold_page": 50,
+      "evidence_quote": "an independent variable (IV), which is the cause of the change, and a dependent variable (DV), which is the effect, or thing that is changed",
+      "filter": null
+    },
+    {
+      "id": "d05", "split": "dev", "type": "paraphrase",
+      "question": "What is it called when people change how they behave because they know they are being watched as part of a study?",
+      "expected_answer": "The Hawthorne effect",
+      "gold_source_id": "soc3e", "gold_page": 63,
+      "evidence_quote": "the Hawthorne effect—which occurs when people change their behavior because they know they are being watched as part of a study",
+      "filter": null
+    },
+    {
+      "id": "d06", "split": "dev", "type": "conditional",
+      "question": "Why is the case study criticized as a primary research method?",
+      "expected_answer": "It gives depth on a topic but not enough evidence to form a generalized conclusion, because one case does not verify a pattern.",
+      "gold_source_id": "soc3e", "gold_page": 62,
+      "evidence_quote": "it does not provide enough evidence to form a generalized conclusion",
+      "filter": null
+    },
+    {
+      "id": "d07", "split": "dev", "type": "numeric",
+      "question": "In the Tuskegee study, how many men took part and how many of them were diagnosed with syphilis?",
+      "expected_answer": "600 African American men, of whom 399 were diagnosed with syphilis.",
+      "gold_source_id": "soc3e", "gold_page": 66,
+      "evidence_quote": "included 600 African American men, including 399 diagnosed with syphilis",
+      "filter": null
+    },
+    {
+      "id": "d08", "split": "dev", "type": "paraphrase",
+      "question": "Which kind of norm embodies the moral views and principles of a group?",
+      "expected_answer": "Mores",
+      "gold_source_id": "soc3e", "gold_page": 87,
+      "evidence_quote": "Mores (mor-ays) are norms that embody the moral views and principles of a group.",
+      "filter": null
+    },
+    {
+      "id": "d09", "split": "dev", "type": "direct",
+      "question": "According to the Sapir-Whorf hypothesis, what does language shape?",
+      "expected_answer": "Language shapes thought and thus behavior.",
+      "gold_source_id": "soc3e", "gold_page": 90,
+      "evidence_quote": "The hypothesis suggests that language shapes thought and thus behavior",
+      "filter": null
+    },
+    {
+      "id": "d10", "split": "dev", "type": "paraphrase",
+      "question": "How do sociologists tell a counterculture apart from a subculture?",
+      "expected_answer": "Countercultures reject some of the larger culture's norms and values (and may defy society), whereas subcultures operate relatively smoothly within it.",
+      "gold_source_id": "soc3e", "gold_page": 93,
+      "evidence_quote": "countercultures, which reject some of the larger culture's norms and values",
+      "filter": null
+    },
+    {
+      "id": "d11", "split": "dev", "type": "direct",
+      "question": "What does the term culture lag refer to?",
+      "expected_answer": "The time between the introduction of a new item of material culture and its social acceptance.",
+      "gold_source_id": "soc3e", "gold_page": 95,
+      "evidence_quote": "culture lag refers to the time that passes between the introduction of a new item of material culture and its social acceptance",
+      "filter": null
+    },
+    {
+      "id": "d12", "split": "dev", "type": "paraphrase",
+      "question": "Which sociologist argued that we see ourselves through the reactions of the people we interact with?",
+      "expected_answer": "Charles Horton Cooley (the looking-glass self)",
+      "gold_source_id": "soc3e", "gold_page": 28,
+      "evidence_quote": "Cooley argued that we 'see' ourselves by the reactions of others with whom we interact",
+      "filter": null
+    },
+    {
+      "id": "d13", "split": "dev", "type": "filter",
+      "question": "How do functionalists interpret the culture of education in the U.S.?",
+      "expected_answer": "The classrooms, textbooks, libraries, technology and teaching approaches show how much emphasis the society places on the value of educating its members.",
+      "gold_source_id": "soc3e", "gold_page": 96,
+      "evidence_quote": "demonstrates how much emphasis is placed on the value of educating a society's members",
+      "filter": {"chapter": 3},
+      "filter_note": "Assumed context: the reader is working in the chapter on culture.",
+      "distractor_pages": [30]
+    },
+    {
+      "id": "d14", "split": "dev", "type": "filter",
+      "question": "According to Max Weber, what role may personal values play in research design versus in interpreting responses?",
+      "expected_answer": "Personal values may influence some aspects of research design, but it is entirely inappropriate to let them shape the interpretation of the responses.",
+      "gold_source_id": "soc3e", "gold_page": 65,
+      "evidence_quote": "he declared it was entirely inappropriate to allow personal values to shape the interpretation of the responses",
+      "filter": {"chapter": 2},
+      "filter_note": "Assumed context: the reader is working in the chapter on sociological research.",
+      "distractor_pages": [26]
+    },
+    {
+      "id": "d15", "split": "dev", "type": "filter",
+      "question": "From the conflict perspective, who benefits from a society's cultural norms?",
+      "expected_answer": "A society's cultural norms benefit some people but hurt others; inequities become embedded in laws and policies, so the powerful oppress the powerless.",
+      "gold_source_id": "soc3e", "gold_page": 97,
+      "evidence_quote": "A society's cultural norms benefit some people but hurt others.",
+      "filter": {"chapter": 3},
+      "filter_note": "Assumed context: the reader is working in the chapter on culture.",
+      "distractor_pages": [32]
+    },
+    {
+      "id": "d16", "split": "dev", "type": "direct",
+      "question": "Where was the first European department of sociology established?",
+      "expected_answer": "At the University of Bordeaux in 1895, established by Emile Durkheim.",
+      "gold_source_id": "soc3e", "gold_page": 26,
+      "evidence_quote": "establishing the first European department of sociology at the University of Bordeaux in 1895",
+      "filter": null
+    },
+    {
+      "id": "d17", "split": "dev", "type": "paraphrase",
+      "question": "What is the term for believing that another culture is superior to your own?",
+      "expected_answer": "Xenocentrism",
+      "gold_source_id": "soc3e", "gold_page": 83,
+      "evidence_quote": "Xenocentrism is the opposite of ethnocentrism, and refers to the belief that another culture is superior to one's own.",
+      "filter": null
+    },
+    {
+      "id": "d18", "split": "dev", "type": "numeric",
+      "question": "How many traffic citations did the fifteen drivers collect in Heussenstamm's bumper-sticker experiment, and over how many days?",
+      "expected_answer": "Thirty-three citations in seventeen days.",
+      "gold_source_id": "soc3e", "gold_page": 64,
+      "evidence_quote": "After seventeen days, the fifteen drivers had collected a total of thirty-three traffic citations.",
+      "filter": null
+    },
+    {
+      "id": "t01", "split": "test", "type": "direct",
+      "question": "What are cultural universals?",
+      "expected_answer": "Patterns or traits that are globally common to all societies (for example, the family unit).",
+      "gold_source_id": "soc3e", "gold_page": 80,
+      "evidence_quote": "Cultural universals are patterns or traits that are globally common to all societies.",
+      "filter": null
+    },
+    {
+      "id": "t02", "split": "test", "type": "paraphrase",
+      "question": "Which basic emotions could Mafa tribal members recognize when they listened to a Western piano piece?",
+      "expected_answer": "Happiness, sadness, and fear.",
+      "gold_source_id": "soc3e", "gold_page": 81,
+      "evidence_quote": "they were able to recognize three basic emotions: happiness, sadness, and fear",
+      "filter": null
+    },
+    {
+      "id": "t03", "split": "test", "type": "conditional",
+      "question": "In a random sample, what is true about each person in the population?",
+      "expected_answer": "Every person in the population has the same chance of being chosen for the study.",
+      "gold_source_id": "soc3e", "gold_page": 54,
+      "evidence_quote": "In a random sample, every person in a population has the same chance of being chosen for the study.",
+      "filter": null
+    },
+    {
+      "id": "t04", "split": "test", "type": "filter",
+      "question": "What do symbolic interactionists who take a constructivist approach propose about reality?",
+      "expected_answer": "That reality is what humans cognitively construct it to be.",
+      "gold_source_id": "soc3e", "gold_page": 34,
+      "evidence_quote": "Constructivism is an extension of symbolic interaction theory which proposes that reality is what humans cognitively construct it to be.",
+      "filter": {"chapter": 1},
+      "filter_note": "Assumed context: the reader is working in the introductory chapter on sociology.",
+      "distractor_pages": [97]
+    },
+    {
+      "id": "t05", "split": "test", "type": "paraphrase",
+      "question": "What was the Milgram experiment designed to measure?",
+      "expected_answer": "The willingness of subjects to obey an authority figure who told them to act against their conscience.",
+      "gold_source_id": "soc3e", "gold_page": 66,
+      "evidence_quote": "Its purpose was to measure the willingness of study subjects to obey an authority figure who instructed them to perform acts that conflicted with their personal conscience.",
+      "filter": null
+    },
+    {
+      "id": "t06", "split": "test", "type": "numeric",
+      "question": "How long did the Lynds live in the town they studied for the Middletown ethnography, and which town was it?",
+      "expected_answer": "Eighteen months, in Muncie, Indiana.",
+      "gold_source_id": "soc3e", "gold_page": 61,
+      "evidence_quote": "they moved to the small town and lived there for eighteen months",
+      "filter": null
+    }
+  ]
+}

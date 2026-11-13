@@ -1,0 +1,599 @@
+{
+  "sources": [
+    {
+      "source_id": "soc3e",
+      "title": "Introduction to Sociology 3e",
+      "authors": "Tonja R. Conerly, Kathleen Holmes, Asha Lal Tamang (OpenStax)",
+      "source_path_or_url": "https://openstax.org/details/books/introduction-sociology-3e",
+      "local_path": "starter/data/raw/introduction-sociology-3e.pdf",
+      "license_or_permission": "CC BY-NC-SA 4.0 (per OpenStax book page; confirm on the PDF copyright page)",
+      "accessed_at": "2026-11-13",
+      "snapshot_version": {
+        "pdf_title": "Introduction to Sociology 3e",
+        "pdf_creation_date": "D:20260427155834-05'00'",
+        "file_bytes": 48299547,
+        "sha256": "e70f1afc8495f4a4b481f3570cf8fbc186cbd5417b3a91033d8d01d237c0c5bd"
+      },
+      "physical_pages_total": 664,
+      "counting_rule": "Body pages of Chapters 1-3 (chapter intro up to the page before 'Key Terms'). Excluded: front matter, Key Terms, Section Summary, Section Quiz, Short Answer, Further Research, References, Chapters 4+. Physical page = 1-based PDF index.",
+      "counted_pages": 62,
+      "counted_page_ranges": {
+        "1": [
+          19,
+          37
+        ],
+        "2": [
+          47,
+          67
+        ],
+        "3": [
+          77,
+          98
+        ]
+      },
+      "total_chars": 197906,
+      "extractor": "pypdf 6.21.4",
+      "pages": [
+        {
+          "page_id": "soc3e-p019",
+          "physical_page": 19,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "Introduction",
+          "chars": 2053,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p020",
+          "physical_page": 20,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.1 What Is Sociology?",
+          "chars": 2704,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p021",
+          "physical_page": 21,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.1 What Is Sociology?",
+          "chars": 3265,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p022",
+          "physical_page": 22,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 3572,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p023",
+          "physical_page": 23,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 4003,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p024",
+          "physical_page": 24,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 1994,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p025",
+          "physical_page": 25,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 4240,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p026",
+          "physical_page": 26,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 4102,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p027",
+          "physical_page": 27,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 2978,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p028",
+          "physical_page": 28,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.2 The History of Sociology",
+          "chars": 4204,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p029",
+          "physical_page": 29,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.3 Theoretical Perspectives in Sociology",
+          "chars": 2464,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p030",
+          "physical_page": 30,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.3 Theoretical Perspectives in Sociology",
+          "chars": 3891,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p031",
+          "physical_page": 31,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.3 Theoretical Perspectives in Sociology",
+          "chars": 2493,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p032",
+          "physical_page": 32,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.3 Theoretical Perspectives in Sociology",
+          "chars": 4169,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p033",
+          "physical_page": 33,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.3 Theoretical Perspectives in Sociology",
+          "chars": 4266,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p034",
+          "physical_page": 34,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.3 Theoretical Perspectives in Sociology",
+          "chars": 3783,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p035",
+          "physical_page": 35,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.4 Why Study Sociology?",
+          "chars": 3134,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p036",
+          "physical_page": 36,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.4 Why Study Sociology?",
+          "chars": 3981,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p037",
+          "physical_page": 37,
+          "chapter": 1,
+          "chapter_title": "An Introduction to Sociology",
+          "section_at_page_start": "1.4 Why Study Sociology?",
+          "chars": 2383,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p047",
+          "physical_page": 47,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "Introduction",
+          "chars": 1771,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p048",
+          "physical_page": 48,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.1 Approaches to Sociological Research",
+          "chars": 2790,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p049",
+          "physical_page": 49,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.1 Approaches to Sociological Research",
+          "chars": 3170,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p050",
+          "physical_page": 50,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.1 Approaches to Sociological Research",
+          "chars": 3376,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p051",
+          "physical_page": 51,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.1 Approaches to Sociological Research",
+          "chars": 4492,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p052",
+          "physical_page": 52,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 3999,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p053",
+          "physical_page": 53,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2802,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p054",
+          "physical_page": 54,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 3448,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p055",
+          "physical_page": 55,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2812,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p056",
+          "physical_page": 56,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 1190,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p057",
+          "physical_page": 57,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 3101,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p058",
+          "physical_page": 58,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2237,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p059",
+          "physical_page": 59,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2386,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p060",
+          "physical_page": 60,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2360,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p061",
+          "physical_page": 61,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 3048,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p062",
+          "physical_page": 62,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2979,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p063",
+          "physical_page": 63,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 2788,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p064",
+          "physical_page": 64,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.2 Research Methods",
+          "chars": 4420,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p065",
+          "physical_page": 65,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.3 Ethical Concerns",
+          "chars": 4020,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p066",
+          "physical_page": 66,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.3 Ethical Concerns",
+          "chars": 2863,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p067",
+          "physical_page": 67,
+          "chapter": 2,
+          "chapter_title": "Sociological Research",
+          "section_at_page_start": "2.3 Ethical Concerns",
+          "chars": 667,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p077",
+          "physical_page": 77,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "Introduction",
+          "chars": 1872,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p078",
+          "physical_page": 78,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 4133,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p079",
+          "physical_page": 79,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 2530,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p080",
+          "physical_page": 80,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 4379,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p081",
+          "physical_page": 81,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 3884,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p082",
+          "physical_page": 82,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 3243,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p083",
+          "physical_page": 83,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 4384,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p084",
+          "physical_page": 84,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.1 What Is Culture?",
+          "chars": 1306,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p085",
+          "physical_page": 85,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 4267,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p086",
+          "physical_page": 86,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 3213,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p087",
+          "physical_page": 87,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 4217,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p088",
+          "physical_page": 88,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 2514,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p089",
+          "physical_page": 89,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 4428,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p090",
+          "physical_page": 90,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 4396,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p091",
+          "physical_page": 91,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.2 Elements of Culture",
+          "chars": 3241,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p092",
+          "physical_page": 92,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.3 High, Low, Pop, Sub, Counter-culture and Cultural Change",
+          "chars": 3908,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p093",
+          "physical_page": 93,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.3 High, Low, Pop, Sub, Counter-culture and Cultural Change",
+          "chars": 2936,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p094",
+          "physical_page": 94,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.3 High, Low, Pop, Sub, Counter-culture and Cultural Change",
+          "chars": 3643,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p095",
+          "physical_page": 95,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.3 High, Low, Pop, Sub, Counter-culture and Cultural Change",
+          "chars": 2591,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p096",
+          "physical_page": 96,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.4 Theoretical Perspectives on Culture",
+          "chars": 2213,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p097",
+          "physical_page": 97,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.4 Theoretical Perspectives on Culture",
+          "chars": 4187,
+          "replacement_chars": 0
+        },
+        {
+          "page_id": "soc3e-p098",
+          "physical_page": 98,
+          "chapter": 3,
+          "chapter_title": "Culture",
+          "section_at_page_start": "3.4 Theoretical Perspectives on Culture",
+          "chars": 2023,
+          "replacement_chars": 0
+        }
+      ],
+      "issues": []
+    }
+  ]
+}
