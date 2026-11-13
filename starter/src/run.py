@@ -12,13 +12,13 @@ from dotenv import load_dotenv
 from .chunking import by_paragraph, chunk_stats, fixed_size
 from .embeddings import MyEmbedder
 from .evaluation import evaluate_query, summarize
-from .ingestion import load_corpus, write_log
+from .ingestion import load_markdown_corpus, write_log
 from .store import PgVectorStore
 
 # Implementation notes (added). Run from starter/:  python -m src.run
 # Strategy configs are fixed here BEFORE any retrieval result was seen (do not tune on test).
 REPO = Path(__file__).resolve().parents[2]
-RESULTS = REPO / "starter" / "results"
+RESULTS = REPO / "results"
 FIXED = {"size": 500, "overlap": 50}  # A
 PARA = {"max_size": 1000}             # B and C
 TOP_K = 3
@@ -42,11 +42,11 @@ def main() -> None:
     t0 = time.time()
 
     # 1. corpus + benchmark
-    pages, log = load_corpus(REPO)
+    pages, log = load_markdown_corpus(REPO)
     if len(pages) < 30:
         raise SystemExit(f"only {len(pages)} content pages; need at least 30")
     ingestion_summary = write_log(pages, log, RESULTS / "ingestion_log.json")
-    bench = json.loads((REPO / "benchmark" / "benchmark.json").read_text(encoding="utf-8"))["questions"]
+    bench = json.loads((REPO / "benchmark" / "benchmark.json").read_text(encoding="utf-8"))
 
     # 2. chunking: A = fixed windows, B = paragraphs; C reuses B's chunks and adds a metadata filter at query time
     chunks = {
@@ -122,20 +122,23 @@ def write_audit_templates(pages: list, chunks: dict, traces: list[dict]) -> None
     rng = random.Random(AUDIT_SEED)
     coherence = []
     for pos_no, page in enumerate(sorted(rng.sample(pages, 10), key=lambda p: p.page), start=1):
-        offset = int(len(page.text) * rng.uniform(0.1, 0.9))
-        anchor = page.text[offset:offset + 40]
+        paragraphs = page.text.split("\n\n")
+        target = paragraphs[min(len(paragraphs) - 1, int(len(paragraphs) * rng.uniform(0.1, 0.9)))]
+        offset = page.text.find(target)   # a position = the start of one source paragraph
+        anchor = target[:40]
         for strategy in ("A", "B"):
             found = None
-            for c in chunks[strategy]:
-                if c.page != page.page:
-                    continue
+            same_page = [c for c in chunks[strategy] if c.page == page.page]
+            for c in same_page:
                 if strategy == "A":
                     covers = c.metadata["char_start"] <= offset < c.metadata["char_end"]
                 else:
-                    covers = anchor in c.text or anchor[:15] in c.text
+                    covers = anchor in c.text
                 if covers:
                     found = c
                     break
+            if found is None and strategy == "B":   # first piece of a split paragraph shorter than the anchor
+                found = next((c for c in same_page if anchor[:10] in c.text), None)
             if found is None:
                 raise RuntimeError(f"no {strategy} chunk covers page {page.page} offset {offset}")
             coherence.append([pos_no, f"p{page.page} @char {offset}", strategy, found.chunk_id,
@@ -153,10 +156,10 @@ def write_audit_templates(pages: list, chunks: dict, traces: list[dict]) -> None
         for h in t["hits"]:
             m = h["metadata"]
             meta_rows.append([t["strategy"], t["question_id"], h["chunk_id"], h["document_id"], h["page"],
-                              m.get("chapter"), m.get("section"), m.get("line_start"), m.get("line_end"),
+                              m.get("period"), m.get("section"), m.get("line_start"), m.get("line_end"),
                               t["gold_page"], "", ""])
     _write_if_new(RESULTS / "manual_metadata.csv",
-                  ["strategy", "question_id", "chunk_id", "document_id", "page", "chapter", "section",
+                  ["strategy", "question_id", "chunk_id", "document_id", "page", "period", "section",
                    "line_start", "line_end", "gold_page", "metadata_correct_and_complete(0/1)", "error_note"], meta_rows)
     _write_if_new(RESULTS / "manual_grounding.csv",
                   ["strategy", "question_id", "question", "gold_evidence", "grounding(0-2)", "reason"],
@@ -171,10 +174,10 @@ def update_experiment_log(metrics: dict, stats: dict, run_info: dict) -> None:
         fields, rows = reader.fieldnames, list(reader)
     vectorizer = f"{run_info['embedding_model']} ({run_info['dimensions']}d)"
     spec = {
-        "A": ("fixed_size", FIXED["size"], FIXED["overlap"], "document_id,source,page,chapter,section", "none"),
-        "B": ("by_paragraph", PARA["max_size"], 0, "document_id,source,page,chapter,section", "none"),
-        "C": ("by_paragraph", PARA["max_size"], 0, "document_id,source,page,chapter,section",
-              "chapter (only on questions that supply one)"),
+        "A": ("fixed_size", FIXED["size"], FIXED["overlap"], "document_id,source,page,section,period", "none"),
+        "B": ("by_paragraph", PARA["max_size"], 0, "document_id,source,page,section,period", "none"),
+        "C": ("by_paragraph", PARA["max_size"], 0, "document_id,source,page,section,period",
+              "period (only on questions that supply one)"),
     }
     for row in rows:
         k = row["strategy"]

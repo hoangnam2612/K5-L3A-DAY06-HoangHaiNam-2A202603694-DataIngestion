@@ -12,7 +12,8 @@ _SENTENCE_END = re.compile(r"(?<=[.?!])\s+")
 
 def _make_chunk(page: DocumentPage, strategy: str, index: int, text: str, **extra) -> Chunk:
     """Build a Chunk with a stable ID and the page metadata needed for tracing and filtering."""
-    meta = {k: page.metadata[k] for k in ("page_id", "chapter", "chapter_title", "section") if k in page.metadata}
+    meta = {k: page.metadata[k] for k in ("page_id", "chapter", "chapter_title", "section", "unit_id", "title", "period", "file")
+            if k in page.metadata}
     meta.update({"chunking": strategy, "chunk_index": index, "n_chars": len(text)}, **extra)
     return Chunk(chunk_id=f"{page.document_id}-p{page.page:03d}-{strategy}-{index:03d}",
                  document_id=page.document_id, source=page.source, page=page.page,

@@ -10,6 +10,8 @@ from .models import Chunk
 # Table/column names are fixed in code; only VALUES are parameterized, and filter fields are
 # restricted to an allow-list, so user-supplied filter input never becomes SQL text.
 _FILTER_COLUMNS = {"chapter", "chapter_title", "section", "page", "document_id"}
+# Fields kept only in the JSONB `metadata` column (Markdown corpus): filtered with metadata ->> key.
+_FILTER_METADATA = {"period", "unit_id", "title", "file"}
 
 
 class PgVectorStore:
@@ -106,10 +108,15 @@ class PgVectorStore:
             raise ValueError("top_k must be positive")
         where, params = ["strategy = %s"], [strategy]
         for key, value in (filters or {}).items():
-            if key not in _FILTER_COLUMNS:
-                raise ValueError(f"filter field {key!r} not allowed; use one of {sorted(_FILTER_COLUMNS)}")
-            where.append(f"{key} = %s")
-            params.append(value)
+            if key in _FILTER_COLUMNS:
+                where.append(f"{key} = %s")
+                params.append(value)
+            elif key in _FILTER_METADATA:
+                where.append("metadata ->> %s = %s")   # both the key and the value are bound parameters
+                params.extend([key, str(value)])
+            else:
+                raise ValueError(f"filter field {key!r} not allowed; use one of "
+                                 f"{sorted(_FILTER_COLUMNS | _FILTER_METADATA)}")
         qv = self._vec(query_vector)
         sql = f"""SELECT chunk_id, text, 1 - (embedding <=> %s::vector) AS score, document_id, source, page, metadata
                   FROM chunks WHERE {' AND '.join(where)}

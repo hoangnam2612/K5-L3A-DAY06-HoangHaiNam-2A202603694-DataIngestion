@@ -180,6 +180,117 @@ def load_corpus(repo_root: Path, manifest_path: Path | None = None) -> tuple[lis
     return pages, log
 
 
+# ---- Markdown corpus (Nam Cao short stories). One story = one source unit (DocumentPage). ----
+# Implementation notes (added): the PDF functions above are kept for the OpenStax corpus; these load
+# plain Markdown files instead. `page` is the 1-based ORDINAL of the story (unit number), the order being
+# "truoc-cach-mang" files sorted by name, then "sau-cach-mang" files sorted by name. Line numbers are the
+# real line numbers of the .md file (CRLF-safe), so chunks can be traced as "story S, lines X-Y".
+_MD_HR = re.compile(r"^(?:(?:\*\s*){3,}|-{3,}|_{3,})$")
+_MD_FOOTNOTE_DEF = re.compile(r"^\[\^[^\]]+\]:")
+_MD_IMAGE_LINE = re.compile(r"^\[?!\[[^\]]*\]\([^)]*\)\]?(?:\([^)]*\))?$")
+_MD_TAG_ONLY = re.compile(r"^</?[A-Za-z][^>]*>$")
+_MD_INLINE = [
+    (re.compile(r"\[\^[^\]]+\]"), ""),                                   # footnote reference [^1]
+    (re.compile(r"</?[A-Za-z][^>]*>"), ""),                              # inline html such as <i>
+    (re.compile(r"\[([^\]]+)\]\([^)]*\)"), r"\1"),                       # [text](url) -> text
+    (re.compile(r"\*\*(.+?)\*\*"), r"\1"),                               # **bold**
+    (re.compile(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])"), r"\1"),   # *italic*
+    (re.compile(r"_([?!:;,.]+)_"), r"\1"),                              # word_?_  (italic punctuation)
+    (re.compile(r"(?<!\w)_(?!\s)(.+?)(?<!\s)_(?!\w)"), r"\1"),           # _italic_
+    (re.compile(r"^#{1,6}\s+"), ""),                                     # "## I" -> "I"
+]
+PERIOD_LABELS = {"truoc-cach-mang": "Trước cách mạng", "sau-cach-mang": "Sau cách mạng"}
+MD_MIN_CHARS = 1500  # GUIDE.md: a source unit of an unpaginated corpus needs >= 1,500 normalized characters
+
+
+def _clean_md_inline(line: str) -> str:
+    for pattern, repl in _MD_INLINE:
+        line = pattern.sub(repl, line)
+    return re.sub(r"[ \t]+", " ", line).strip()
+
+
+def normalize_markdown(raw: str) -> dict:
+    """Clean one Markdown story. Returns text (paragraphs joined by a blank line), the title and a line map.
+
+    Dropped (and counted in `removed`): the "# title" line, horizontal rules, footnote definitions, image-only
+    lines and lone HTML tags. Inline Markdown markers are stripped but the words are kept.
+    """
+    raw = unicodedata.normalize("NFC", raw).replace(" ", " ").replace("­", "")
+    all_lines = raw.splitlines()
+    removed = Counter()
+    title, kept, paragraphs, current = "", [], [], []   # kept: [(line_no, cleaned_line)]
+    for number, original in enumerate(all_lines, start=1):
+        stripped = original.strip()
+        if not stripped:
+            if current:
+                paragraphs.append(" ".join(current))
+                current = []
+            continue
+        if re.match(r"^#\s", stripped) and not title:
+            title = re.sub(r"\[\^[^\]]+\]", "", stripped[2:]).strip()
+            removed["title_line"] += 1
+            continue
+        reason = ("rule" if _MD_HR.match(stripped) else "footnote_definition" if _MD_FOOTNOTE_DEF.match(stripped)
+                  else "image" if _MD_IMAGE_LINE.match(stripped) else "html_tag" if _MD_TAG_ONLY.match(stripped) else None)
+        if reason:
+            removed[reason] += 1
+            if current:                      # a dropped line also ends the paragraph before it
+                paragraphs.append(" ".join(current))
+                current = []
+            continue
+        cleaned = _clean_md_inline(stripped)
+        if not cleaned:
+            removed["empty_after_cleaning"] += 1
+            continue
+        kept.append((number, cleaned))
+        current.append(cleaned)
+    if current:
+        paragraphs.append(" ".join(current))
+    text = "\n\n".join(paragraphs)
+    flat, starts, pos = " ".join(line for _, line in kept), [], 0
+    for number, line in kept:
+        starts.append([pos, number])
+        pos += len(line) + 1
+    shown = {n for n, _ in kept}
+    line_map = {"flat": flat, "starts": starts, "total": len(all_lines),
+                "lines": [[i, l.strip(), i in shown] for i, l in enumerate(all_lines, start=1) if l.strip()]}
+    year = re.search(r"\s*\((\d{4})\)\s*$", title)
+    return {"text": text, "title": title[:year.start()] if year else title, "title_year": year.group(1) if year else None,
+            "removed": dict(removed), "line_map": line_map if flat == " ".join(text.split()) else None}
+
+
+def load_markdown_corpus(repo_root: Path, raw_dir: Path | None = None,
+                         document_id: str = "namcao") -> tuple[list[DocumentPage], list[dict]]:
+    """Load every story under starter/data/raw/nam-cao/<period>/*.md as one DocumentPage.
+
+    Metadata per unit: page_id, unit_id (file slug), title, title_year (only when the heading prints one),
+    period (folder name; the filter field), file, section (= title), chars (normalized), removed_lines.
+    Returns (pages, log); the log records low_text, empty_unit and line_map_mismatch events.
+    """
+    raw_dir = raw_dir or repo_root / "starter" / "data" / "raw" / "nam-cao"
+    files = [(period, f) for period in PERIOD_LABELS for f in sorted((raw_dir / period).glob("*.md"))]
+    pages, log = [], []
+    for ordinal, (period, f) in enumerate(files, start=1):
+        rel = f"{period}/{f.name}"
+        parsed = normalize_markdown(f.read_text(encoding="utf-8"))
+        text = parsed["text"]
+        if not text.strip():
+            log.append({"unit": ordinal, "file": rel, "event": "empty_unit"})
+            continue
+        chars = len(" ".join(text.split()))
+        if chars < MD_MIN_CHARS:
+            log.append({"unit": ordinal, "file": rel, "event": "low_text", "chars": chars})
+        if parsed["line_map"] is None:
+            log.append({"unit": ordinal, "file": rel, "event": "line_map_mismatch"})
+        meta = {"page_id": f"{document_id}-u{ordinal:02d}", "unit_id": f.stem, "title": parsed["title"],
+                "title_year": parsed["title_year"], "period": period, "period_label": PERIOD_LABELS[period],
+                "file": rel, "section": parsed["title"], "chars": chars,
+                "raw_chars": len(f.read_text(encoding="utf-8")), "removed_lines": sum(parsed["removed"].values()),
+                "removed": parsed["removed"], "line_map": parsed["line_map"]}
+        pages.append(DocumentPage(document_id=document_id, source=rel, page=ordinal, text=text, metadata=meta))
+    return pages, log
+
+
 def write_log(pages: list[DocumentPage], log: list[dict], out_path: Path) -> dict:
     """Write per-page events plus a summary to a JSON file; return the summary."""
     summary = {
@@ -187,7 +298,7 @@ def write_log(pages: list[DocumentPage], log: list[dict], out_path: Path) -> dic
         "total_chars": sum(p.metadata["chars"] for p in pages),
         "removed_furniture_lines": sum(p.metadata["removed_lines"] for p in pages),
         "events": dict(Counter(e["event"] for e in log)),
-        "pages_per_chapter": dict(Counter(p.metadata["chapter"] for p in pages)),
+        "pages_per_chapter": dict(Counter(p.metadata.get("chapter") or p.metadata.get("period") for p in pages)),
     }
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps({"summary": summary, "events": log}, ensure_ascii=False, indent=2),

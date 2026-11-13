@@ -116,7 +116,7 @@ textarea { width: 100%; resize: vertical; min-height: 54px; }
   <div class="wrap">
     <div class="head-top">
       <div>
-        <h1>Thí nghiệm RAG · Introduction to Sociology 3e</h1>
+        <h1>Thí nghiệm RAG · Truyện ngắn Nam Cao</h1>
         <div class="sub" id="runline"></div>
       </div>
       <button class="theme" id="theme" type="button" aria-label="Đổi giao diện sáng/tối">Sáng / Tối</button>
@@ -131,7 +131,7 @@ const DATA = /*__DATA__*/null;
 const $ = (s, r = document) => r.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const STRATS = ["A", "B", "C"];
-const STRAT_NAME = { A: "Cố định 500/50", B: "Theo đoạn ≤1000", C: "B + lọc chương" };
+const STRAT_NAME = { A: "Cố định 500/50", B: "Theo đoạn ≤1000", C: "B + lọc thời kỳ" };
 const tr = (strategy, id) => DATA.traces.find(t => t.strategy === strategy && t.question_id === id);
 const fmt = (n, d = 1) => Number(n).toLocaleString("vi-VN", { maximumFractionDigits: d });
 const dot = s => `<span class="sdot ${s}" title="${esc(STRAT_NAME[s])}">${s}</span>`;
@@ -151,8 +151,8 @@ function highlight(text, quote) {
 
 /* ---------- state ---------- */
 const store = {
-  get() { try { return JSON.parse(localStorage.getItem("rag-dashboard-labels") || "{}"); } catch { return {}; } },
-  set(v) { try { localStorage.setItem("rag-dashboard-labels", JSON.stringify(v)); } catch { /* storage unavailable */ } },
+  get() { try { return JSON.parse(localStorage.getItem("rag-dashboard-labels-namcao") || "{}"); } catch { return {}; } },
+  set(v) { try { localStorage.setItem("rag-dashboard-labels-namcao", JSON.stringify(v)); } catch { /* storage unavailable */ } },
 };
 let labels = store.get();
 const ui = { tab: "overview", qSplit: "all", qShow: "all", openQ: null, page: DATA.pages[0].page, manual: "coherence", reveal: false };
@@ -201,7 +201,7 @@ function renderOverview() {
   const missRows = STRATS.map(s => {
     const items = DATA.traces.filter(t => t.strategy === s && !t.hit3);
     return `<tr><td>${dot(s)}</td><td>${items.length ? items.map(t =>
-      `<button class="pill ${t.evidence_possibly_split ? "warn" : "miss"}" style="border:0" data-open="${t.question_id}" title="${t.evidence_possibly_split ? "Evidence có thể bị cắt qua nhiều chunk" : t.gold_page_in_top3 ? "Đúng trang nhưng chunk thiếu evidence" : "Không có chunk đúng trang trong top-3"}">${t.question_id}${t.evidence_possibly_split ? " · cắt" : t.gold_page_in_top3 ? " · đúng trang" : ""}</button>`).join(" ") : '<span class="muted">Không có</span>'}</td></tr>`;
+      `<button class="pill ${t.evidence_possibly_split ? "warn" : "miss"}" style="border:0" data-open="${t.question_id}" title="${t.evidence_possibly_split ? "Evidence có thể bị cắt qua nhiều chunk" : t.gold_page_in_top3 ? "Đúng truyện nhưng chunk thiếu evidence" : "Không có chunk đúng truyện trong top-3"}">${t.question_id}${t.evidence_possibly_split ? " · cắt" : t.gold_page_in_top3 ? " · đúng truyện" : ""}</button>`).join(" ") : '<span class="muted">Không có</span>'}</td></tr>`;
   }).join("");
   const comp = STRATS.map(s => {
     const f = d => { const m = DATA.metrics[s][d]; return m.filter_questions ? `${m.filter_compliant}/${m.filter_questions}` : "N/A"; };
@@ -209,14 +209,14 @@ function renderOverview() {
   }).join("");
   $("#view").innerHTML = `
   <section class="grid kpis">
-    <div class="card kpi"><div class="l">Trang nội dung đã nạp</div><div class="v">${ing.pages_loaded}</div><div class="d">${fmt(ing.total_chars, 0)} ký tự · ${ing.removed_furniture_lines} dòng chân trang bị loại</div></div>
+    <div class="card kpi"><div class="l">Truyện đã nạp</div><div class="v">${ing.pages_loaded}</div><div class="d">${fmt(ing.total_chars, 0)} ký tự · ${ing.removed_furniture_lines} dòng nhiễu Markdown bị loại</div></div>
     <div class="card kpi"><div class="l">Số chunk</div><div class="v">${st.A.chunks} <span class="muted" style="font-weight:400">/</span> ${st.B.chunks}</div><div class="d">A (cố định) / B và C (theo đoạn)</div></div>
     <div class="card kpi"><div class="l">Embedding</div><div class="v">${fmt(r.embedding_tokens, 0)}</div><div class="d">token · ${r.embedding_requests} request · ≈ $${r.estimated_cost_usd.toFixed(4)}</div></div>
     <div class="card kpi"><div class="l">Thời gian embed + lưu</div><div class="v">${fmt(r.embed_and_store_seconds.A + r.embed_and_store_seconds.B)}s</div><div class="d">A ${r.embed_and_store_seconds.A}s · B ${r.embed_and_store_seconds.B}s · DB ${r.db_rows_after_run.A}+${r.db_rows_after_run.B} dòng</div></div>
   </section>
   <section class="card">
     <h2>Độ chính xác truy xuất</h2>
-    <div class="sub">Hit@1: chunk xếp đầu thuộc đúng trang gold và chứa đủ evidence. Hit@3: có ít nhất một chunk như vậy trong top-3.</div>
+    <div class="sub">Hit@1: chunk xếp đầu thuộc đúng truyện gold và chứa đủ evidence. Hit@3: có ít nhất một chunk như vậy trong top-3.</div>
     <div class="legend" style="margin-top:10px">${STRATS.map(s => `<span>${dot(s)} ${esc(STRAT_NAME[s])}</span>`).join("")}</div>
     <div class="grid two" style="margin-top:8px">
       <div><h3>Dev <span class="muted">· ${DATA.metrics.A.dev.n} câu</span></h3>${barChart("dev")}</div>
@@ -227,8 +227,8 @@ function renderOverview() {
   <section class="grid two">
     <div class="card"><h2>Câu trượt Hit@3</h2><div class="sub">Bấm vào mã câu để xem top-3 chi tiết.</div>
       <div class="scroll"><table><tbody>${missRows}</tbody></table></div>
-      <div class="cell-hint" style="margin-top:8px"><span class="pill warn">cắt</span> evidence nằm ở ranh giới hai chunk · <span class="pill miss">đúng trang</span> đúng trang nhưng chunk thiếu evidence</div></div>
-    <div class="card"><h2>Tuân thủ filter</h2><div class="sub">Câu có filter: top-3 chỉ chứa chunk thuộc chương được yêu cầu.</div>
+      <div class="cell-hint" style="margin-top:8px"><span class="pill warn">cắt</span> evidence nằm ở ranh giới hai chunk · <span class="pill miss">đúng truyện</span> đúng truyện nhưng chunk thiếu evidence</div></div>
+    <div class="card"><h2>Tuân thủ filter</h2><div class="sub">Câu có filter: top-3 chỉ chứa chunk thuộc thời kỳ được yêu cầu.</div>
       <div class="scroll"><table><thead><tr><th>Cấu hình</th><th>Dev</th><th>Test</th></tr></thead><tbody>${comp}</tbody></table></div>
       <div class="cell-hint" style="margin-top:8px">B không áp filter nên đây là phép so sánh trực tiếp với C. Test chỉ có ${DATA.metrics.A.test.filter_questions} câu có filter.</div></div>
   </section>
@@ -236,7 +236,7 @@ function renderOverview() {
     <div class="scroll"><table><thead><tr><th>Cấu hình</th><th>Chia chunk</th><th>Số chunk</th><th>Độ dài (min / trung vị / TB / max)</th><th>Lọc metadata</th></tr></thead><tbody>
     <tr><td>${dot("A")} A</td><td>Cửa sổ ${r.configs.A.size} ký tự, overlap ${r.configs.A.overlap}</td><td>${st.A.chunks}</td><td>${st.A.min} / ${st.A.median} / ${st.A.mean} / ${st.A.max}</td><td>Không</td></tr>
     <tr><td>${dot("B")} B</td><td>Theo đoạn, tối đa ${r.configs.B.max_size} ký tự</td><td>${st.B.chunks}</td><td>${st.B.min} / ${st.B.median} / ${st.B.mean} / ${st.B.max}</td><td>Không</td></tr>
-    <tr><td>${dot("C")} C</td><td>Giống B (dùng lại chunk của B)</td><td>${st.B.chunks}</td><td>như B</td><td>Chương, chỉ khi câu hỏi có filter</td></tr>
+    <tr><td>${dot("C")} C</td><td>Giống B (dùng lại chunk của B)</td><td>${st.B.chunks}</td><td>như B</td><td>Thời kỳ (period), chỉ khi câu hỏi có filter</td></tr>
     </tbody></table></div></section>`;
 }
 
@@ -245,18 +245,25 @@ function resultPill(t) {
   if (t.hit1) return `<span class="pill hit">✓ Hit@1</span>`;
   if (t.hit3) return `<span class="pill hit">✓ Hit@3 · hạng ${t.first_hit_rank}</span>`;
   if (t.evidence_possibly_split) return `<span class="pill warn">✗ evidence bị cắt</span>`;
-  if (t.gold_page_in_top3) return `<span class="pill miss">✗ đúng trang, thiếu evidence</span>`;
+  if (t.gold_page_in_top3) return `<span class="pill miss">✗ đúng truyện, thiếu evidence</span>`;
   return `<span class="pill miss">✗ không thấy</span>`;
 }
 const lineRange = m => m && m.line_start != null
-  ? `<span title="Số dòng trong văn bản trích xuất từ trang (tổng ${m.page_lines} dòng)"><b>dòng ${m.line_start}–${m.line_end}</b> / ${m.page_lines}</span>` : "";
+  ? `<span title="Số dòng trong file .md của truyện (tổng ${m.page_lines} dòng)"><b>dòng ${m.line_start}–${m.line_end}</b> / ${m.page_lines}</span>` : "";
+function goldInfo(q) {
+  const p = DATA.pages.find(x => x.page === q.gold_page);
+  if (!p) return `truyện ${q.gold_page}`;
+  const re = quoteRegex(q.evidence_quote);
+  const hit = p.lines.find(l => re.test(l[1]));
+  return `truyện ${q.gold_page} · ${esc(p.title)}${hit ? ` · dòng ${hit[0]}` : ""}`;
+}
 function hitCards(t) {
   return t.hits.map((h, i) => {
     const ph = t.per_hit[i], m = h.metadata || {};
     return `<div class="hitcard ${ph.hit ? "good" : ""}">
-      <div class="hitmeta"><b>#${ph.rank}</b><span>trang ${h.page}${h.page === t.gold_page ? " (gold)" : ""}</span>${lineRange(m)}<span>score ${h.score.toFixed(3)}</span>
-      ${m.chapter ? `<span>chương ${m.chapter}</span>` : ""}${ph.hit ? '<span class="pill hit">đủ evidence</span>' : ph.source_page_match ? '<span class="pill warn">đúng trang</span>' : ""}</div>
-      <div class="hitmeta mono">${esc(h.chunk_id)}${m.section ? " · " + esc(m.section) : ""}</div>
+      <div class="hitmeta"><b>#${ph.rank}</b><span>truyện ${h.page}${h.page === t.gold_page ? " (gold)" : ""}</span>${lineRange(m)}<span>score ${h.score.toFixed(3)}</span>
+      ${m.title ? `<span>${esc(m.title)}</span>` : ""}${ph.hit ? '<span class="pill hit">đủ evidence</span>' : ph.source_page_match ? '<span class="pill warn">đúng truyện</span>' : ""}</div>
+      <div class="hitmeta mono">${esc(h.chunk_id)}${m.period ? " · " + esc(m.period) : ""}</div>
       <div class="chunk">${highlight(h.text, t.evidence_quote)}</div></div>`;
   }).join("");
 }
@@ -274,17 +281,17 @@ function renderQuestions() {
     const open = ui.openQ === q.id;
     return `<tr class="qrow" data-q="${q.id}" tabindex="0" aria-expanded="${open}">
       <td>${q.id}</td><td><span class="pill neutral">${q.split}</span></td>
-      <td>${esc(q.question)}${q.filter ? ` <span class="pill neutral" title="Filter được cung cấp trước làm ngữ cảnh người dùng">lọc: chương ${q.filter.chapter}</span>` : ""}</td>
-      <td class="muted">tr. ${q.gold_page}</td>${ts.map(t => `<td>${resultPill(t)}</td>`).join("")}</tr>
+      <td>${esc(q.question)}${q.filter ? ` <span class="pill neutral" title="Filter được cung cấp trước làm ngữ cảnh người dùng">lọc: ${esc(q.filter.period)}</span>` : ""}</td>
+      <td class="muted">truyện ${q.gold_page}</td>${ts.map(t => `<td>${resultPill(t)}</td>`).join("")}</tr>
       ${open ? `<tr class="detail"><td colspan="7">
-        <div class="quote"><div class="cell-hint">Evidence gold · trang ${q.gold_page}</div>${esc(q.evidence_quote)}</div>
+        <div class="quote"><div class="cell-hint">Evidence gold · ${goldInfo(q)}</div>${esc(q.evidence_quote)}</div>
         <div class="muted" style="margin:8px 0 12px">Đáp án mong đợi: ${esc(q.expected_answer || "")}</div>
         <div class="cols3">${STRATS.map(s => { const t = tr(s, q.id);
           return `<div><div style="margin-bottom:8px;display:flex;gap:8px;align-items:center">${dot(s)} <b>${esc(STRAT_NAME[s])}</b> ${resultPill(t)}</div>
-          ${t.applied_filter ? `<div class="cell-hint" style="margin-bottom:6px">Đã lọc: chương ${t.applied_filter.chapter}</div>` : ""}${hitCards(t)}</div>`; }).join("")}</div></td></tr>` : ""}`;
+          ${t.applied_filter ? `<div class="cell-hint" style="margin-bottom:6px">Đã lọc: ${esc(t.applied_filter.period)}</div>` : ""}${hitCards(t)}</div>`; }).join("")}</div></td></tr>` : ""}`;
   }).join("");
   $("#view").innerHTML = `<section class="card">
-    <h2>Câu hỏi & truy vết top-3</h2><div class="sub">Bấm một dòng để xem chunk được trả về. Phần được tô vàng là evidence gold nằm trong chunk. Mỗi chunk ghi rõ trang và khoảng dòng của nó.</div>
+    <h2>Câu hỏi & truy vết top-3</h2><div class="sub">Bấm một dòng để xem chunk được trả về. Phần được tô vàng là evidence gold nằm trong chunk. Mỗi chunk ghi rõ truyện và khoảng dòng của nó.</div>
     <div class="chips" style="margin:12px 0">${chip("qs", "all", "Tất cả")}${chip("qs", "dev", "Dev")}${chip("qs", "test", "Test")}
       <span class="muted" style="margin-inline:6px">|</span>
       ${chip("qshow", "all", "Mọi câu")}${chip("qshow", "miss", "Có cấu hình trượt")}${chip("qshow", "diff", "Khác nhau giữa cấu hình")}${chip("qshow", "filter", "Câu có filter")}
@@ -333,20 +340,20 @@ function renderChunking() {
   <section class="card"><h2>Phân bố độ dài chunk</h2>
     <div class="sub">A bị chặn ở 500 ký tự nên dồn vào cột 400–500; B trải rộng hơn vì cắt theo đoạn.</div>
     <div class="legend" style="margin-top:8px"><span>${dot("A")} A</span><span>${dot("B")} B</span></div>${histogram()}</section>
-  <section class="card"><h2>So sánh cách cắt trên từng trang</h2>
-    <div class="sub">Chọn một trang để xem A và B cắt cùng một nội dung thế nào.</div>
+  <section class="card"><h2>So sánh cách cắt trên từng truyện</h2>
+    <div class="sub">Chọn một truyện để xem A và B cắt cùng một nội dung thế nào.</div>
     <div class="pagebar" style="margin:12px 0">
       <button class="btn" data-pg="-1" ${idx === 0 ? "disabled" : ""}>← Trước</button>
-      <select id="pgsel" aria-label="Chọn trang">${DATA.pages.map(x => `<option value="${x.page}" ${x.page === p.page ? "selected" : ""}>Trang ${x.page} · chương ${x.chapter}${pageQuestions(x.page).length ? " · " + pageQuestions(x.page).map(q => q.id).join(",") : ""}</option>`).join("")}</select>
+      <select id="pgsel" aria-label="Chọn trang">${DATA.pages.map(x => `<option value="${x.page}" ${x.page === p.page ? "selected" : ""}>Truyện ${x.page} · ${esc(x.title)}${pageQuestions(x.page).length ? " · " + pageQuestions(x.page).map(q => q.id).join(",") : ""}</option>`).join("")}</select>
       <button class="btn" data-pg="1" ${idx === DATA.pages.length - 1 ? "disabled" : ""}>Sau →</button>
-      <span class="muted">${esc(p.chapter_title)} · mục: ${esc(p.section)}</span></div>
-    ${qs.length ? `<div class="note" style="margin-bottom:12px">Trang này là gold của ${qs.map(q => q.id).join(", ")}.
+      <span class="muted">${esc(p.title)} · ${esc(p.period)}</span></div>
+    ${qs.length ? `<div class="note" style="margin-bottom:12px">Truyện này là gold của ${qs.map(q => q.id).join(", ")}.
       ${splits.length ? ` A cắt evidence của ${splits.map(q => q.id).join(", ")} qua nhiều chunk.` : " A giữ evidence trong một chunk."}
       ${splitB.length ? ` B cắt evidence của ${splitB.map(q => q.id).join(", ")}.` : " B giữ evidence trong một chunk."}</div>` : ""}
-    <details style="margin-bottom:12px"><summary class="cell-hint" style="cursor:pointer">Văn bản gốc của trang ${p.page}, đánh số dòng (${p.lines.length} dòng có chữ)</summary>
+    <details style="margin-bottom:12px"><summary class="cell-hint" style="cursor:pointer">Văn bản gốc của truyện ${p.page}, đánh số dòng (${p.lines.length} dòng có chữ)</summary>
       <div class="mono scroll" style="margin-top:8px;max-height:360px;overflow:auto;background:var(--surface2);border-radius:8px;padding:10px">${p.lines.map(l =>
         `<div style="${l[2] ? "" : "opacity:.5;text-decoration:line-through"}"><span class="muted">${String(l[0]).padStart(3, " ")}</span>  ${esc(l[1])}</div>`).join("")}</div>
-      <div class="cell-hint" style="margin-top:6px">Dòng gạch ngang là chân trang/nhãn bị loại khi chuẩn hoá. Số dòng đếm trên văn bản trích xuất từ PDF, gần với dòng nhìn thấy trên trang.</div></details>
+      <div class="cell-hint" style="margin-top:6px">Dòng gạch ngang là dòng bị loại khi chuẩn hoá (tiêu đề, đường kẻ, chú thích). Số dòng là số dòng thật trong file .md.</div></details>
     <div class="cols3" style="grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">
       <div><h3 style="margin-bottom:8px">${dot("A")} A · ${p.A.length} chunk</h3>${chunkColumn(p, "A")}</div>
       <div><h3 style="margin-bottom:8px">${dot("B")} B / C · ${p.B.length} chunk</h3>${chunkColumn(p, "B")}</div></div></section>`;
@@ -410,11 +417,11 @@ function renderManual() {
       return `<div class="item"><div class="hitmeta">${dot(r.strategy)}<b>${r.question_id}</b><span class="mono">${esc(r.chunk_id)}</span></div>
         <table><tbody><tr><td class="muted">document_id</td><td>${esc(r.document_id)}</td><td class="muted">page</td><td>${r.page}</td><td class="muted">gold page</td><td>${r.gold_page}</td></tr>
         <tr><td class="muted">dòng</td><td colspan="5">${r.line_start ? `${r.line_start}–${r.line_end}` : "—"}</td></tr>
-        <tr><td class="muted">chapter</td><td>${esc(r.chapter)}</td><td class="muted">section</td><td colspan="3">${esc(r.section)}</td></tr></tbody></table>
-        <div>${scoreButtons("metadata", key, "ok", [1, 0])} <span class="cell-hint">1 = đủ và đúng so với PDF · 0 = sai/thiếu</span></div>
+        <tr><td class="muted">period</td><td>${esc(r.period)}</td><td class="muted">section</td><td colspan="3">${esc(r.section)}</td></tr></tbody></table>
+        <div>${scoreButtons("metadata", key, "ok", [1, 0])} <span class="cell-hint">1 = đủ và đúng so với file .md · 0 = sai/thiếu</span></div>
         <textarea data-text="metadata|${key}|note" placeholder="Ghi lỗi nếu có" aria-label="Ghi chú lỗi">${esc(seedValue("metadata", key, "note", r.error_note))}</textarea></div>`;
     }).join("");
-    body = `<div class="sub">Đối chiếu trang, chương và mục của từng chunk top-3 (câu test) với PDF gốc. Mở đúng trang vật lý trong PDF để kiểm tra.</div><div style="margin-top:12px">${progress(done, rows.length)}</div>${cards}${exportBar("metadata")}`;
+    body = `<div class="sub">Đối chiếu truyện (page), thời kỳ, mục và khoảng dòng của từng chunk top-3 (câu test) với file .md gốc.</div><div style="margin-top:12px">${progress(done, rows.length)}</div>${cards}${exportBar("metadata")}`;
   } else {
     const rows = DATA.manual.grounding; let done = 0;
     const cards = rows.map(r => {
@@ -439,8 +446,8 @@ function exportBar(kind) {
 function buildCsv(kind) {
   if (kind === "coherence") return ["manual_coherence.csv", toCsv(["position", "source_position", "strategy", "chunk_id", "section", "text", "coherence(0-2)", "reason"],
     DATA.manual.coherence.map(r => { const k = `${r.position}|${r.strategy}`; return [r.position, r.source_position, r.strategy, r.chunk_id, r.section, r.text, seedValue("coherence", k, "score", r["coherence(0-2)"]), seedValue("coherence", k, "reason", r.reason)]; }))];
-  if (kind === "metadata") return ["manual_metadata.csv", toCsv(["strategy", "question_id", "chunk_id", "document_id", "page", "chapter", "section", "line_start", "line_end", "gold_page", "metadata_correct_and_complete(0/1)", "error_note"],
-    DATA.manual.metadata.map(r => { const k = `${r.strategy}|${r.question_id}|${r.chunk_id}`; return [r.strategy, r.question_id, r.chunk_id, r.document_id, r.page, r.chapter, r.section, r.line_start, r.line_end, r.gold_page, seedValue("metadata", k, "ok", r["metadata_correct_and_complete(0/1)"]), seedValue("metadata", k, "note", r.error_note)]; }))];
+  if (kind === "metadata") return ["manual_metadata.csv", toCsv(["strategy", "question_id", "chunk_id", "document_id", "page", "period", "section", "line_start", "line_end", "gold_page", "metadata_correct_and_complete(0/1)", "error_note"],
+    DATA.manual.metadata.map(r => { const k = `${r.strategy}|${r.question_id}|${r.chunk_id}`; return [r.strategy, r.question_id, r.chunk_id, r.document_id, r.page, r.period, r.section, r.line_start, r.line_end, r.gold_page, seedValue("metadata", k, "ok", r["metadata_correct_and_complete(0/1)"]), seedValue("metadata", k, "note", r.error_note)]; }))];
   return ["manual_grounding.csv", toCsv(["strategy", "question_id", "question", "gold_evidence", "grounding(0-2)", "reason"],
     DATA.manual.grounding.map(r => { const k = `${r.strategy}|${r.question_id}`; return [r.strategy, r.question_id, r.question, r.gold_evidence, seedValue("grounding", k, "score", r["grounding(0-2)"]), seedValue("grounding", k, "reason", r.reason)]; }))];
 }
