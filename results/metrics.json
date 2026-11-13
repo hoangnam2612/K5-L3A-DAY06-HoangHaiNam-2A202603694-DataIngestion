@@ -1,0 +1,129 @@
+{
+  "A": {
+    "dev": {
+      "n": 18,
+      "hit1": 5,
+      "hit3": 6,
+      "hit1_rate": 0.278,
+      "hit3_rate": 0.333,
+      "filter_questions": 2,
+      "filter_compliant": 1,
+      "evidence_possibly_split": [
+        "d08",
+        "d10"
+      ],
+      "missed": [
+        "d01",
+        "d02",
+        "d03",
+        "d04",
+        "d08",
+        "d09",
+        "d10",
+        "d12",
+        "d14",
+        "d15",
+        "d16",
+        "d18"
+      ]
+    },
+    "test": {
+      "n": 6,
+      "hit1": 1,
+      "hit3": 2,
+      "hit1_rate": 0.167,
+      "hit3_rate": 0.333,
+      "filter_questions": 1,
+      "filter_compliant": 1,
+      "evidence_possibly_split": [
+        "t02"
+      ],
+      "missed": [
+        "t01",
+        "t02",
+        "t04",
+        "t06"
+      ]
+    }
+  },
+  "B": {
+    "dev": {
+      "n": 18,
+      "hit1": 5,
+      "hit3": 6,
+      "hit1_rate": 0.278,
+      "hit3_rate": 0.333,
+      "filter_questions": 2,
+      "filter_compliant": 2,
+      "evidence_possibly_split": [],
+      "missed": [
+        "d01",
+        "d02",
+        "d03",
+        "d04",
+        "d09",
+        "d10",
+        "d11",
+        "d12",
+        "d14",
+        "d15",
+        "d17",
+        "d18"
+      ]
+    },
+    "test": {
+      "n": 6,
+      "hit1": 3,
+      "hit3": 4,
+      "hit1_rate": 0.5,
+      "hit3_rate": 0.667,
+      "filter_questions": 1,
+      "filter_compliant": 1,
+      "evidence_possibly_split": [],
+      "missed": [
+        "t02",
+        "t06"
+      ]
+    }
+  },
+  "C": {
+    "dev": {
+      "n": 18,
+      "hit1": 5,
+      "hit3": 6,
+      "hit1_rate": 0.278,
+      "hit3_rate": 0.333,
+      "filter_questions": 2,
+      "filter_compliant": 2,
+      "evidence_possibly_split": [],
+      "missed": [
+        "d01",
+        "d02",
+        "d03",
+        "d04",
+        "d09",
+        "d10",
+        "d11",
+        "d12",
+        "d14",
+        "d15",
+        "d17",
+        "d18"
+      ]
+    },
+    "test": {
+      "n": 6,
+      "hit1": 3,
+      "hit3": 4,
+      "hit1_rate": 0.5,
+      "hit3_rate": 0.667,
+      "filter_questions": 1,
+      "filter_compliant": 1,
+      "evidence_possibly_split": [],
+      "missed": [
+        "t02",
+        "t06"
+      ]
+    }
+  }
+}

@@ -1,0 +1,281 @@
+﻿position,source_position,strategy,chunk_id,section,text,coherence(0-2),reason
+1,p1 @char 28948,A,namcao-p001-fixed-064,Ba người bạn,"phải đi bán lạc, nhưng con cũng biết anh thường thiếu sách và bút giấy. Con định khi được món tiền kha khá sẽ biếu anh Tỳ và thú tội ra luôn thể.
+
+Thầy giáo kêu lên (chưa hôm nào thầy nhiều lúc bồng bột như ngày hôm nay):
+
+— Anh không nói điều ấy, tôi quên mất. Cái ý chính của tôi lúc kể truyện anh Tỳ là để bàn với các anh, kẻ ít người nhiều giúp đỡ cho anh ấy, chứ có phải để tra cái việc mất sách đâu. Không ngờ việc nọ làm nẩy việc kia. Thôi, cái việc mất sách ta coi là tạm xong rồi. Anh Duyên",0,"Bắt đầu giữa câu ('phải đi bán lạc…'), người nói 'con' không rõ, kết thúc cụt ở 'Anh Duyên'; khó hiểu ai nói gì."
+1,p1 @char 28948,B,namcao-p001-para-034,Ba người bạn,"Thầy giáo kêu lên (chưa hôm nào thầy nhiều lúc bồng bột như ngày hôm nay):
+
+— Anh không nói điều ấy, tôi quên mất. Cái ý chính của tôi lúc kể truyện anh Tỳ là để bàn với các anh, kẻ ít người nhiều giúp đỡ cho anh ấy, chứ có phải để tra cái việc mất sách đâu. Không ngờ việc nọ làm nẩy việc kia. Thôi, cái việc mất sách ta coi là tạm xong rồi. Anh Duyên đã biết hối hận, lại đã biết nhịn ăn quà để chuộc lỗi thì ta cũng nên tha. Bây giờ ta trở về cái việc chính: giúp đỡ anh Tỳ chút ít.
+
+Tỳ phản đối:
+
+— Thưa thầy, con không dám nhận.
+
+Duyên quay lại, vẻ mặt vẫn còn ân-hận, bảo:
+
+— Nếu anh không nhận món tiền của tôi biếu anh tức là anh còn giận tôi.
+
+— Tôi có giận anh đâu?
+
+— Nhưng...
+
+Thầy vội gạt đi:",1,"Bắt đầu từ đầu đoạn nhưng thiếu ngữ cảnh: 'điều ấy', 'việc mất sách' không được kể trong chunk; kết thúc bằng lời dẫn 'Thầy vội gạt đi:'."
+2,p2 @char 5061,A,namcao-p002-fixed-011,Bài học quét nhà,"en đi rồi. Tìm được no, ăn no; tìm được đói, ăn đói. Chẳng tội gì mà lo mình ạ.
+
+-- Đã đành thế nhưng còn nợ?
+
+-- Thì ta ỳ ra đấy. Thịt người có ăn được đâu mà sợ!
+
+Thầy cười chua chát. U cũng cười. Một lúc sau, u lại bảo:
+
+-- Nói đùa vậy, chứ nợ thì thế nào cũng phải trả. Mình không phải là hạng người lì được. Bán gì thì bán, cũng phải bán đi mà trả.
+
+-- Còn gì mà bán?
+
+-- Cái nhà! Mình công nợ cũng vì làm nhà. Nay không còn làm gì trả nợ được, thì lại bán nhà đi mà trả, có khó gì đâu?
+
+-- Đến",1,"Mở đầu bằng mảnh từ ('en đi rồi'), kết thúc cụt ('Đến'); vẫn hiểu đại ý cuộc bàn chuyện nợ và bán nhà."
+2,p2 @char 5061,B,namcao-p002-para-006,Bài học quét nhà,"-- Nhưng thây kệ! Hơi đâu mà lo trước? Đến đâu hay đến đấy. Thời buổi này, khổ đến đâu mà không phải chịu? Vả lại nhà mình khổ mãi, quen đi rồi. Tìm được no, ăn no; tìm được đói, ăn đói. Chẳng tội gì mà lo mình ạ.
+
+-- Đã đành thế nhưng còn nợ?
+
+-- Thì ta ỳ ra đấy. Thịt người có ăn được đâu mà sợ!
+
+Thầy cười chua chát. U cũng cười. Một lúc sau, u lại bảo:
+
+-- Nói đùa vậy, chứ nợ thì thế nào cũng phải trả. Mình không phải là hạng người lì được. Bán gì thì bán, cũng phải bán đi mà trả.
+
+-- Còn gì mà bán?
+
+-- Cái nhà! Mình công nợ cũng vì làm nhà. Nay không còn làm gì trả nợ được, thì lại bán nhà đi mà trả, có khó gì đâu?
+
+-- Đến nước ấy thì đẹp mặt!
+
+-- Ai cười thì cũng đành chịu vậy, chứ biết làm sao bây giờ?
+
+Thầy lại lầm lì không nói. Nhưng thỉnh thoảng, mắt thầy lóe ra một tia dữ tợn. Trông mặt thầy sợ lắm. U bấm Hồng, khẽ bảo: ""Đi chơi đi!"". Rồi thì u cũng lảng ra. U dắt Hồng sang nhà hàng xóm chơi, bởi sợ thầy gây sự...",2,"Trọn một cảnh đối thoại về nợ và bán nhà, bắt đầu và kết thúc ở ranh giới đoạn; nhân vật 'thầy', 'u' rõ."
+3,p3 @char 2460,A,namcao-p003-fixed-005,Cái chết của con Mực,"trả thù cho anh bằng một cái đá mạnh vào sườn con vật. Nó lấm lét lảng dần cũng không dám chạy một cách thẳng thắn để đi trốn nữa. Du trách em:
+
+-- Sao Tú ác thế?
+
+-- Cần gì, đến mai giết thịt cho anh ăn đấy.
+
+Du thấy cái vui đoàn tụ giảm hẳn đi một nửa.
+
+Hình ảnh con chó ghẻ với cái buồn mơ hồ cứ lảng vảng trong óc chàng mãi mãi. Sáng hôm sau lúc ăn cơm chàng thoáng thấy nó đi qua, đầu cúi mắt nhìn nghiêng như những người giả trá. Chàng muốn gọi nó vào kẹp nó vào giữa hai bàn chân và vừa ăn vừa",1,"Bắt đầu giữa câu ('trả thù cho anh…'), kết thúc cụt ('vừa ăn vừa'); hiểu Du thương con chó nhưng thiếu ranh giới."
+3,p3 @char 2460,B,namcao-p003-para-003,Cái chết của con Mực,"-- Cần gì, đến mai giết thịt cho anh ăn đấy.
+
+Du thấy cái vui đoàn tụ giảm hẳn đi một nửa.
+
+Hình ảnh con chó ghẻ với cái buồn mơ hồ cứ lảng vảng trong óc chàng mãi mãi. Sáng hôm sau lúc ăn cơm chàng thoáng thấy nó đi qua, đầu cúi mắt nhìn nghiêng như những người giả trá. Chàng muốn gọi nó vào kẹp nó vào giữa hai bàn chân và vừa ăn vừa vẩy cho nó miếng cơm chung một bát. Nhưng mà không thể được: dịu dàng quá là yếu tâm hồn, và ai hiểu được rằng mình lại có thể yêu thương một con chó bẩn ghê gớm như thế được?",2,Đủ ý: Du thương con chó ghẻ nhưng không dám tỏ tình thương; bắt đầu và kết thúc ở ranh giới đoạn.
+4,p4 @char 7098,A,namcao-p004-fixed-015,Cái mặt không chơi được,"hàng buổi chưa ra câu nào. Tôi ngấm ngầm ghen với Đức. Và tôi thầm mong cho có khi nào Nhung đem sách sang mà không gặp Đức để tôi được giúp Nhung một lần. Nhưng không khi nào cả. Bởi Nhung có chắc chắn là có Đức ở nhà thì mới sang.
+
+May cho tôi, một lần Nhung sang thì Đức đang bận học bài thi. Tôi thì học xong rồi, đang tập vẽ. Đức bảo Nhung:
+
+-- Tôi mải quá. Chú Tri ấy rỗi. Cô đưa sách chú ấy giảng cho mà làm. Tôi thấy tim đập mau thon thót. Ấy là tôi sung sướng. Tôi cố tươi cười, ngừng bút v",1,"Bắt đầu giữa câu ('hàng buổi chưa ra câu nào'), cụt ở 'ngừng bút v'; hiểu đại ý nhưng đầu chunk thiếu chủ thể."
+4,p4 @char 7098,B,namcao-p004-para-008,Cái mặt không chơi được,"Và tôi thầm mong cho có khi nào Nhung đem sách sang mà không gặp Đức để tôi được giúp Nhung một lần. Nhưng không khi nào cả. Bởi Nhung có chắc chắn là có Đức ở nhà thì mới sang.
+
+May cho tôi, một lần Nhung sang thì Đức đang bận học bài thi. Tôi thì học xong rồi, đang tập vẽ. Đức bảo Nhung:
+
+-- Tôi mải quá. Chú Tri ấy rỗi. Cô đưa sách chú ấy giảng cho mà làm. Tôi thấy tim đập mau thon thót. Ấy là tôi sung sướng. Tôi cố tươi cười, ngừng bút vẽ ngẩng đầu lên ngóng đợi. Nhung ngập ngừng một chút, rồi Nhung kêu lên:
+
+-- À, thôi em nghĩ ra được rồi. Em về làm đây.
+
+Tôi toan mếu, tôi đau đớn lắm. Nhưng cũng chưa đau đớn bằng hôm sau Đức vừa cười hi hí vừa khoe với tôi:
+
+-- Cô ả Nhung hôm nay phải phạt. Cái tính đố hôm qua chưa làm. Lúc bấy giờ kêu nghĩ ra rồi. Kỳ tình thì cô ả có nghĩ ra được cái năm kia. Nó oán tôi ghê lắm nhé....
+
+Tôi sầm mặt. Tôi còn đang tìm một cái gì để nói lảng đi cho đỡ ngượng thì Đức bảo:
+
+-- Cho đáng kiếp. Ai bảo hỏi Tri không chịu hỏi. Rồi anh nhìn tôi nói tiếp:",2,"Trọn một tình tiết (Tri mong giúp Nhung, bị Đức trêu); ranh giới đoạn, chỉ kết thúc bằng lời dẫn."
+5,p7 @char 5727,A,namcao-p007-fixed-012,Con mèo,"Viển ngủ mệt, không biết gì. Anh đứng tần ngần một lúc. Rồi anh rón rén đi lại giường...
+
+...Sáng hôm sau, tiếng người láo quáo bên hàng xóm, làm chị cu giật mình, mở mắt ra. Chị hơi sửng sốt, trong nhà đã sáng. Chị ngóc đầu nhìn lại võng. Viển ôm con chị, miệng vẫn còn há hốc, xem chừng ngủ mệt. Chị lay đầu chồng, khẽ gọi:
+
+-- Phải gió! Dậy đi!... Sáng rồi.
+
+Anh cu mở mắt ra. Chị giục:
+
+-- Kìa, dậy đi!
+
+-- Tạnh mưa rồi à?
+
+-- Tạnh rồi! Dậy đi!
+
+-- Yên đã nào!...
+
+-- Dậy đi! Ra chõng kia mà nằm.",2,"Bắt đầu ở đầu câu, kết thúc ở cuối lời thoại; đủ cảnh sáng hôm sau, nhân vật rõ (chị cu, anh cu, Viển)."
+5,p7 @char 5727,B,namcao-p007-para-006,Con mèo,"Anh cu đuổi. Chị vừa chạy quanh vườn, vừa kêu. Anh không đuổi nữa, chị cứ đứng ngoài vườn mà nhiếc mãi. Đến lúc mỏi miệng, không buồn nói nữa, chị về sân, thì chồng chị đã lăn ra hè, ngủ như chết từ bao giờ rồi, Viển và thằng cu cũng ngủ. Chị đi vào giường.
+
+Đêm hôm ấy, trời nổi gió, rồi nổi mưa. Mãi đến lúc thấy nước hắt vào người, anh cu mới thức giấc. Anh vội vàng nhổm dậy, anh giụi mắt. Anh vào nhà. Một cái chớp lóe lên. Anh thoáng thấy cái Viển ôm con anh ngủ trên cái võng. Anh đưa võng cho con một cái. Viển ngủ mệt, không biết gì. Anh đứng tần ngần một lúc. Rồi anh rón rén đi lại giường...
+
+...Sáng hôm sau, tiếng người láo quáo bên hàng xóm, làm chị cu giật mình, mở mắt ra. Chị hơi sửng sốt, trong nhà đã sáng. Chị ngóc đầu nhìn lại võng. Viển ôm con chị, miệng vẫn còn há hốc, xem chừng ngủ mệt. Chị lay đầu chồng, khẽ gọi:
+
+-- Phải gió! Dậy đi!... Sáng rồi.
+
+Anh cu mở mắt ra. Chị giục:
+
+-- Kìa, dậy đi!
+
+-- Tạnh mưa rồi à?
+
+-- Tạnh rồi! Dậy đi!
+
+-- Yên đã nào!...",2,"Trọn cảnh từ cơn mưa đêm đến sáng hôm sau; ranh giới đoạn, đủ chủ thể."
+6,p12 @char 3681,A,namcao-p012-fixed-008,Đòn chồng,"thé:
+
+-- Cái mặt nhà chị! Chị thử mở mắt ra trông một tấm hay là hai tấm, nào!
+
+Cái mặt bủng beo của y xám như chàm. Nó không còn đỏ được, bởi y làm gì có máu. Cái miệng y há ra như chực nói, nhưng nói thế nào? Chứng cớ trờ trờ ra đấy. Y cứng hàm. Những tiếng ấp úng trong cổ họng, một lúc lâu mới bật ra thành lời được:
+
+-- Thì tôi giả...., tôi giả hai xu....
+
+Nhưng y làm gì còn xu! Y cúi mặt, nước mắt ra ròng ròng. Chị hàng bánh lộn tiết lên. Chị xỉa tay vào tận mặt y:
+
+-- Thôi! Tôi cũng thí ch",1,"Bắt đầu bằng mảnh 'thé:', cụt ở 'thí ch'; vẫn hiểu cảnh chị hàng bánh tha cho vợ Lúng."
+6,p12 @char 3681,B,namcao-p012-para-004,Đòn chồng,"Cái mặt bủng beo của y xám như chàm. Nó không còn đỏ được, bởi y làm gì có máu. Cái miệng y há ra như chực nói, nhưng nói thế nào? Chứng cớ trờ trờ ra đấy. Y cứng hàm. Những tiếng ấp úng trong cổ họng, một lúc lâu mới bật ra thành lời được:
+
+-- Thì tôi giả...., tôi giả hai xu....
+
+Nhưng y làm gì còn xu! Y cúi mặt, nước mắt ra ròng ròng. Chị hàng bánh lộn tiết lên. Chị xỉa tay vào tận mặt y:
+
+-- Thôi! Tôi cũng thí cho nhà chị. Tôi chỉ lu loa lên thế để cho cả chợ người ta biết; rồi giờ người ta vạch vôi lấy mặt chị, để thấy cái mặt nhà chị ở đâu thì người ta kiềng nó ra.",2,Trọn cảnh tha cho người bị bắt quả tang; ranh giới đoạn (chủ thể 'y' dễ suy ra).
+7,p20 @char 20066,A,namcao-p020-fixed-044,Một đám cưới,"y tót ra chái đứng. Một lúc lâu nó cũng không vào. Thầy nó phải đỡ lấy chỗ cau ở tay bà mẹ chồng, đặt lên giường thờ mẹ nó. Rồi thầy nó nói thật to:
+
+-- Ði nấu nước đi con!
+
+Không thấy con gái thưa, ông phải bảo thằng con trai lớn:
+
+-- Chạy ra bảo chị đun ấm nước.
+
+Rồi ông thân hành đi lấy chìa vôi ra để têm trầu. Bà mẹ chồng có lời ngay:
+
+-- Thưa ông, ông đã có lòng thương đến cháu, mà xét ra, như thế này thì thật ông thương quá, thương mọi nhẽ, cái gì ông cũng châm chước đi cho cả, khiến chúng",1,"Bắt đầu bằng mảnh 'y tót ra chái đứng', cụt ở 'khiến chúng'; hiểu đại ý cảnh nhà trai đến chơi nhưng thiếu đầu/cuối."
+7,p20 @char 20066,B,namcao-p020-para-025,Một đám cưới,"Xế chiều hôm ấy, bà mẹ chồng và chồng Dần mới đến. Cả hai cùng mặc quần áo cánh. Bà mẹ khoác một cái áo nâu dài đã bạc ở trên vai. Chú rể xách một chẽ cau, chừng một chục quả. Vào đến nhà, y lúng túng không biết đặt đâu. Bà mẹ trông thấy bảo Dần:
+
+-- Cho bu mượn cái đĩa đi, con!
+
+Mặt Dần đã đỏ bừng. Hai đứa em nó, trông thấy, cười rúc rích. Nó lợi dụng câu sai của mẹ chồng, để chạy tót ra chái đứng. Một lúc lâu nó cũng không vào. Thầy nó phải đỡ lấy chỗ cau ở tay bà mẹ chồng, đặt lên giường thờ mẹ nó. Rồi thầy nó nói thật to:
+
+-- Ði nấu nước đi con!
+
+Không thấy con gái thưa, ông phải bảo thằng con trai lớn:
+
+-- Chạy ra bảo chị đun ấm nước.
+
+Rồi ông thân hành đi lấy chìa vôi ra để têm trầu. Bà mẹ chồng có lời ngay:",2,"Trọn cảnh nhà trai đến chơi, nhân vật rõ (bà mẹ chồng, chồng Dần); chỉ dừng trước lời của bà mẹ."
+8,p25 @char 6805,A,namcao-p025-fixed-015,Nhìn người ta sung sướng,"vào bảo:
+
+-- Thì bà còn nghĩ đến thầy bu con làm gì?
+
+-- Khốn nạn, con ơi!... Con phải biết rằng người ta thì còn có năm có bảy, mất con nọ còn con kia. Bà thì mẹ có một con, con có một mẹ. Mà bà thì bù đắp cho thầy bu con đến thế, thế mà bây giờ nó bạc, nó chẳng biết thương lấy bà một tí. Chúng nó chỉ nghĩ sao cho sướng thân chúng nó, còn mẹ có chết khô chết nỏ cũng không buồn nhìn nhõi. Thầy con thì rượu chè lu bù, ba chén dấn vào thì nói khoác, một tấc lên đến trời, thật là một đứa ăn càn nó",1,"Bắt đầu bằng mảnh 'vào bảo:', cụt ở 'ăn càn nó'; hiểu lời bà than nhưng thiếu người nói."
+8,p25 @char 6805,B,namcao-p025-para-009,Nhìn người ta sung sướng,"-- Khốn nạn, con ơi!... Con phải biết rằng người ta thì còn có năm có bảy, mất con nọ còn con kia. Bà thì mẹ có một con, con có một mẹ. Mà bà thì bù đắp cho thầy bu con đến thế, thế mà bây giờ nó bạc, nó chẳng biết thương lấy bà một tí. Chúng nó chỉ nghĩ sao cho sướng thân chúng nó, còn mẹ có chết khô chết nỏ cũng không buồn nhìn nhõi. Thầy con thì rượu chè lu bù, ba chén dấn vào thì nói khoác, một tấc lên đến trời, thật là một đứa ăn càn nói bậy. Bà nghĩ mà xấu hổ với người ta quá. Bảo mãi mẹ nó phải can nó dần dần, nhưng mẹ con thì can đã không can lại mua thật nhiều về cho nó uống. Suốt đời không dám nói động đến cái chân lông nó, chỉ sợ nó đi. Tao thì chồng tao đi từ năm tao mới hăm ba tuổi, tao cũng không chết đói, tao cũng nuôi nấng, gây dựng được cho bu mày...
+
+Ngạn đờ mắt và thở dài. Lúc nào bà y cũng còn nghĩ đến người chồng bạc bẽo và lấy làm đau xót vì có những người chồng không bạc bẽo bằng chồng bà.",2,Trọn lời than của bà và phản ứng của Ngạn; ranh giới đoạn.
+9,p46 @char 4448,A,namcao-p046-fixed-009,Đợi chờ,"ái đang tuổi ngổ ngáo, reo lên to quá
+
+Liễu ra hiệu tay, ngăn lại.
+
+-- Khẽ mồm chứ. Cô ả! Để cho con người ta ngủ.
+
+Nhàn chợt nhớ ra.
+
+-- Chết thật! Tôi vô ý quá. Cháu nó chịu ngủ với chị nó, hở chị?
+
+-- Cũng phải chịu chứ! Thời kháng chiến này mà không thế thì chết đói... Bây giờ mới tan học kia à?
+
+-- Tan lâu rồi. Nhưng em còn phải đi khai hội nên đến bây giờ mới về.
+
+-- Bàn gì mà khuya thế?
+
+-- Định chương trình thi đua ái quốc.
+
+Nhàn nhìn kỹ Liễu, nắm lấy cổ tay chị.
+
+-- Bà chị tôi lớp này đ",1,"Bắt đầu bằng mảnh 'ái đang tuổi ngổ ngáo', cụt ở 'lớp này đ'; hiểu đoạn đối thoại Liễu–Nhàn nhưng mất đầu/cuối."
+9,p46 @char 4448,B,namcao-p046-para-005,Đợi chờ,"Chị nhận ra ngay là Nhàn. Nhàn hay hát những câu ấy quá đến nỗi Liễu chỉ nghe mà cũng thuộc. Tiếng hát êm êm ngân trong đêm khuya và trong lòng Liễu. Nhàn thấy Liễu cởi trần đứng ở sân, ngạc nhiên hỏi:
+
+-- Chị chưa đi ngủ kia à?
+
+-- Chưa, vừa cuốc vườn xong
+
+-- Hoan hô phụ nữ tăng gia sản xuất!
+
+Cô con gái đang tuổi ngổ ngáo, reo lên to quá
+
+Liễu ra hiệu tay, ngăn lại.
+
+-- Khẽ mồm chứ. Cô ả! Để cho con người ta ngủ.
+
+Nhàn chợt nhớ ra.
+
+-- Chết thật! Tôi vô ý quá. Cháu nó chịu ngủ với chị nó, hở chị?
+
+-- Cũng phải chịu chứ! Thời kháng chiến này mà không thế thì chết đói... Bây giờ mới tan học kia à?
+
+-- Tan lâu rồi. Nhưng em còn phải đi khai hội nên đến bây giờ mới về.
+
+-- Bàn gì mà khuya thế?
+
+-- Định chương trình thi đua ái quốc.
+
+Nhàn nhìn kỹ Liễu, nắm lấy cổ tay chị.
+
+-- Bà chị tôi lớp này đen mà gầy lắm. Trông già sọm hẳn đi khéo ông anh tôi về không nhận nữa thì nguy đấy.
+
+Liễu cười
+
+-- Tôi ba con rồi, chả sợ. Nhưng cô chưa chồng thì mới lo!",2,Trọn cảnh đối thoại Liễu–Nhàn từ mở đầu đến câu kết 'chưa chồng thì mới lo'.
+10,p58 @char 27325,A,namcao-p058-fixed-060,Vài nét ghi qua vùng vừa giải phóng,"lại nói: có thấy bộ đội không? Sao không thấy, nhưng ai bảo nó? Tôi vẫn dẫn đường cho bộ đội, cho du kích. Bộ đội, du kích vẫn ăn cơm nhà tôi luôn. Hôm nào có anh em, tôi ra tận đường canh gác, nhỡ có chúng đến thì báo hiệu cho anh em biết...""
+
+Thấy tôi mở bản đồ ra xem, cụ cũng ghé lại xem. Cụ bảo tôi.
+
+-- Bản đồ gì đây?
+
+-- Bắc Bộ.
+
+-- Có tỉnh Phú Thọ không?
+
+-- Có đấy. Phú Thọ đây.
+
+Tôi chỉ một cái khoanh tròn nhỏ tí. Cụ thích lắm, hỏi them.
+
+-- Yên Bái chỗ nào?
+
+Thấy Yên Bái rồi, lại hỏi:
+
+-",1,"Bắt đầu giữa lời kể ('lại nói: có thấy bộ đội không?'), cụt ở dấu '-' cuối; hiểu đại ý cụ xem bản đồ nhưng thiếu ngữ cảnh."
+10,p58 @char 27325,B,namcao-p058-para-034,Vài nét ghi qua vùng vừa giải phóng,"Vợ chết lâu lắm rồi..."".
+
+Cụ kể với tôi những chuyện như vậy và cười khoái chí. Cụ bảo tôi: ""Sao nó hỏi ngu thế nhỉ? Có thấy Việt Minh không? Việt Minh đây chứ Việt Minh đâu! (chỉ chỉ vào ngực cụ...). Rồi nó lại nói: có thấy bộ đội không? Sao không thấy, nhưng ai bảo nó? Tôi vẫn dẫn đường cho bộ đội, cho du kích. Bộ đội, du kích vẫn ăn cơm nhà tôi luôn. Hôm nào có anh em, tôi ra tận đường canh gác, nhỡ có chúng đến thì báo hiệu cho anh em biết...""
+
+Thấy tôi mở bản đồ ra xem, cụ cũng ghé lại xem. Cụ bảo tôi.
+
+-- Bản đồ gì đây?
+
+-- Bắc Bộ.
+
+-- Có tỉnh Phú Thọ không?
+
+-- Có đấy. Phú Thọ đây.
+
+Tôi chỉ một cái khoanh tròn nhỏ tí. Cụ thích lắm, hỏi them.
+
+-- Yên Bái chỗ nào?
+
+Thấy Yên Bái rồi, lại hỏi:
+
+-- Sơn La?
+
+Tôi chỉ Sơn La. Cụ hỏi:
+
+-- Ở Tây Bắc có phải không?
+
+-- Vâng, Tây Bắc.
+
+-- Chuyến này có đánh trận nào không?
+
+-- Đánh Pa Kha, chỗ này đây.
+
+Tôi chỉ trên bản đồ và thuật lại cho cụ nghe những trận đầu tiên của bộ đội và nhân dân Tây Bắc đánh để phối hợp với bên này.",2,Cảnh cụ già xem bản đồ trọn vẹn; chỉ câu đầu 'Vợ chết lâu lắm rồi…' là phần đuôi của lời kể trước.

@@ -45,3 +45,47 @@ Dùng cùng dữ liệu, model và câu hỏi cho cả ba cấu hình. Tách **1
 | Cách nộp bài | [SUBMISSION.md](SUBMISSION.md) |
 
 [data/format-example.json](data/format-example.json) chỉ minh họa định dạng, không phải corpus đủ điều kiện. Phần xử lý và benchmark do bạn tự hiện thực; không bắt buộc xây chatbot.
+
+## Bài làm: cách setup và chạy
+
+Hoàng Hải Nam · 2A202603694 · Corpus: 59 truyện ngắn Nam Cao (tiếng Việt, Markdown). Báo cáo: [report/individual/2A202603694_HoangHaiNam.md](report/individual/2A202603694_HoangHaiNam.md).
+
+**1. Dữ liệu** (không commit vào repo). Đặt vào `starter/data/raw/nam-cao/`:
+
+```bash
+git clone https://github.com/khudocmo/truyen-ngan-nam-cao.git
+cd truyen-ngan-nam-cao && git checkout 049faf18d1313ded145258e4da1a4725cace9fbe
+# chép thư mục truoc-cach-mang/, sau-cach-mang/ và LICENSE.md vào starter/data/raw/nam-cao/
+```
+
+`data/manifest.json` đã có sẵn (nguồn, giấy phép, quy tắc đếm, mã băm từng file). Chỉ khi tạo lại manifest bằng `scripts/build_manifest.py` mới cần thêm file `starter/data/raw/nam-cao/SOURCE.txt` (các dòng `url`, `commit`, `commit_date`, `accessed_at`, `excluded`).
+
+**2. Môi trường và database** (chạy từ `starter/`):
+
+```bash
+python -m venv .venv                      # kích hoạt: .venv\Scripts\Activate.ps1 (Windows) hoặc source .venv/bin/activate
+python -m pip install -r requirements.txt
+cp .env.example .env                      # điền OPENAI_API_KEY (không commit .env)
+docker compose -p day6_student_starter up -d --wait
+python scripts/check_setup.py
+```
+
+**3. Kiểm tra benchmark, chạy pipeline, xem kết quả** (chạy từ `starter/`):
+
+```bash
+python -I -X utf8 scripts/verify_benchmark.py   # kiểm chứng evidence của 24 câu, trước khi chạy truy xuất
+python -m src.run                                # chunk A/B/C, embed, lưu pgvector, top-3, chỉ số; mất khoảng 1 phút, ≈ 0,02 USD
+python -I -X utf8 scripts/build_dashboard.py    # tạo results/dashboard.html để xem trực quan
+```
+
+**4. Đường dẫn chính**
+
+| Nội dung | Đường dẫn |
+|---|---|
+| Code pipeline | `starter/src/` |
+| Manifest dữ liệu | `data/manifest.json` |
+| Benchmark (câu hỏi, split, gold evidence) | `benchmark/benchmark.json` |
+| Log cấu hình và giả thuyết A/B/C | `artifacts/experiment_log.csv` |
+| Trace top-3, thống kê, log nạp dữ liệu | `results/traces.json`, `results/metrics.json`, `results/run_info.json`, `results/ingestion_log.json` |
+| Nhãn thủ công | `results/manual_coherence.csv`, `results/manual_metadata.csv`, `results/manual_grounding.csv` |
+| Báo cáo cá nhân | `report/individual/2A202603694_HoangHaiNam.md` |

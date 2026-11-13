@@ -1,0 +1,19 @@
+﻿strategy,question_id,question,gold_evidence,grounding(0-2),reason
+A,t01,Thứ mà chị Chuột nấu rồi bảo các con là chè thật ra là gì?,"Không phải chè, cám mà! Cám nấu mà bu bảo chè!",1,"Cả top-3 đúng truyện Nghèo, đúng cảnh nấu 'chè' (dòng 21–31) nhưng không có câu nói đó là cám."
+A,t02,"Chị Chuột nói mình vừa bán những thứ gì, và được bao nhiêu tiền?",Tôi vừa bán con chó mực với hai buồng chuối non được bốn hào.,1,"Chunk hạng 1 (dòng 69–83) có 'bán con chó mực với hai buồng chuối non' nhưng bị cắt ở 'được b…', thiếu 'bốn hào'."
+A,t03,Bác Tư làm rơi vật gì xuống bể nước khiến cậu con trai phải lội xuống tìm?,"Tao đánh rơi chai ""sâm-banh"" vào trong này rồi!",2,"Chunk hạng 3 (dòng 9–21) có 'Tao đánh rơi chai sâm-banh'; đủ trả lời và truy nguồn, dù hạng 1–2 không liên quan."
+A,t04,Vợ bác bếp Tư đã mất được bao lâu?,vợ chết đã ba năm rồi mà nghĩ đến lúc nào bác ta vẫn còn thương,0,"Top-3 (Đòn chồng, Mò sâm banh dòng 147–159, Làm tổ) không nói vợ bác Tư mất bao lâu."
+A,t05,Chị tổ trưởng du kích cho biết bao nhiêu phần trong đội đã có chồng?,"Hai phần ba chúng em đã có chồng, một vài người đã có con.",2,Chunk hạng 1 (dòng 7–11) có 'Hai phần ba chúng em đã có chồng'; đủ trả lời và truy nguồn.
+A,t06,"So với làm ruộng, các chị du kích thấy việc đi chiến đấu vất vả thế nào?",Chúng tôi không thấy vất vả bằng làm ruộng.,0,"Top-3 từ Trần Cừ và Từ ngược về xuôi, không nói về so sánh chiến đấu với làm ruộng."
+B,t01,Thứ mà chị Chuột nấu rồi bảo các con là chè thật ra là gì?,"Không phải chè, cám mà! Cám nấu mà bu bảo chè!",2,"Chunk hạng 2 (dòng 51–57) có 'Không phải chè, cám mà!'; đủ trả lời và truy nguồn."
+B,t02,"Chị Chuột nói mình vừa bán những thứ gì, và được bao nhiêu tiền?",Tôi vừa bán con chó mực với hai buồng chuối non được bốn hào.,0,"Top-3 không có câu chị Chuột bán chó mực và chuối; chunk hạng 1 là cảnh khác của Nghèo, hạng 2–3 là truyện khác."
+B,t03,Bác Tư làm rơi vật gì xuống bể nước khiến cậu con trai phải lội xuống tìm?,"Tao đánh rơi chai ""sâm-banh"" vào trong này rồi!",2,Chunk hạng 1 (dòng 19–53) có đủ câu về chai sâm-banh rơi xuống bể.
+B,t04,Vợ bác bếp Tư đã mất được bao lâu?,vợ chết đã ba năm rồi mà nghĩ đến lúc nào bác ta vẫn còn thương,2,Chunk hạng 1 (dòng 7) có 'vợ chết đã ba năm rồi'; đủ trả lời và truy nguồn.
+B,t05,Chị tổ trưởng du kích cho biết bao nhiêu phần trong đội đã có chồng?,"Hai phần ba chúng em đã có chồng, một vài người đã có con.",2,Chunk hạng 1 (dòng 9–23) có câu 'Hai phần ba chúng em đã có chồng'.
+B,t06,"So với làm ruộng, các chị du kích thấy việc đi chiến đấu vất vả thế nào?",Chúng tôi không thấy vất vả bằng làm ruộng.,0,"Top-3 từ Trần Cừ và Từ ngược về xuôi, không có câu 'không thấy vất vả bằng làm ruộng'."
+C,t01,Thứ mà chị Chuột nấu rồi bảo các con là chè thật ra là gì?,"Không phải chè, cám mà! Cám nấu mà bu bảo chè!",2,"Giống B: chunk hạng 2 (dòng 51–57) nêu rõ là cám; truy được truyện Nghèo, dòng 51."
+C,t02,"Chị Chuột nói mình vừa bán những thứ gì, và được bao nhiêu tiền?",Tôi vừa bán con chó mực với hai buồng chuối non được bốn hào.,0,Giống B: không có thông tin về việc bán chó mực và chuối non.
+C,t03,Bác Tư làm rơi vật gì xuống bể nước khiến cậu con trai phải lội xuống tìm?,"Tao đánh rơi chai ""sâm-banh"" vào trong này rồi!",2,Giống B: chunk hạng 1 (dòng 19–53) nêu chai sâm-banh.
+C,t04,Vợ bác bếp Tư đã mất được bao lâu?,vợ chết đã ba năm rồi mà nghĩ đến lúc nào bác ta vẫn còn thương,2,Giống B: chunk hạng 1 (dòng 7) nêu vợ chết đã ba năm.
+C,t05,Chị tổ trưởng du kích cho biết bao nhiêu phần trong đội đã có chồng?,"Hai phần ba chúng em đã có chồng, một vài người đã có con.",2,Giống B: chunk hạng 1 có câu 'Hai phần ba chúng em đã có chồng'.
+C,t06,"So với làm ruộng, các chị du kích thấy việc đi chiến đấu vất vả thế nào?",Chúng tôi không thấy vất vả bằng làm ruộng.,0,Giống B: top-3 không có câu trả lời; truyện đúng (Những bàn tay đẹp ấy) không xuất hiện.

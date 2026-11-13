@@ -1,217 +1,251 @@
-{
-  "meta": {
-    "corpus": "soc3e (OpenStax Introduction to Sociology 3e), Chapters 1-3, physical pages per data/manifest.json",
-    "created_before_retrieval": true,
-    "split_method": "Fixed by hand before any chunking, embedding or retrieval was run. 18 dev / 6 test. Test spans all 3 chapters and several question types (direct, paraphrase, conditional/numeric, filter). No question is edited after seeing retrieval results.",
-    "page_convention": "gold_page = 1-based physical PDF page (not the printed page number).",
-    "filter_semantics": "filter = {\"chapter\": N} is an ASSUMED user-context input supplied before retrieval (user says which chapter they are reading). Questions never contain the gold page, and the filter value is not derived from the gold answer text. Configurations A and B ignore filter; C applies it only when filter is non-null.",
-    "leakage_risks": [
-      "Dev and test questions come from the same book and chapters, so neighbouring chunks can serve both splits.",
-      "The author wrote the questions after reading the full text, so wording may echo source phrasing (lexical overlap favours keyword-like matching).",
-      "Only 6 test questions: one question changes Hit@k by about 17 percentage points."
-    ],
-    "filter_distractors": "For filter questions, distractor_pages lists look-alike pages in another chapter that discuss the same topic but do NOT contain the gold evidence."
+[
+  {
+    "id": "d01",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Nguyên nhân của cuộc cãi vã giữa vợ chồng anh cu là gì?",
+    "gold_source_id": "namcao",
+    "gold_page": 7,
+    "evidence_quote": "Đầu đuôi tại con mèo. Nhưng cũng tại trời bức nữa. Bức không chịu được.",
+    "expected_answer": "Con mèo, cộng với cái nóng bức của trời."
   },
-  "questions": [
-    {
-      "id": "d01", "split": "dev", "type": "direct",
-      "question": "What German term did Weber and Dilthey introduce for trying to understand a social world in a deep way, from an insider's point of view?",
-      "expected_answer": "Verstehen",
-      "gold_source_id": "soc3e", "gold_page": 26,
-      "evidence_quote": "introduced the concept of verstehen, a German word that means to understand in a deep way",
-      "filter": null
-    },
-    {
-      "id": "d02", "split": "dev", "type": "paraphrase",
-      "question": "Which English philosopher wrote the first book that had the word sociology in its title, and in what year?",
-      "expected_answer": "Herbert Spencer, in 1873 (The Study of Sociology)",
-      "gold_source_id": "soc3e", "gold_page": 25,
-      "evidence_quote": "In 1873, the English philosopher Herbert Spencer published The Study of Sociology",
-      "filter": null
-    },
-    {
-      "id": "d03", "split": "dev", "type": "conditional",
-      "question": "How do manifest functions differ from latent functions of a social process?",
-      "expected_answer": "Manifest functions are sought or anticipated consequences; latent functions are the unsought consequences.",
-      "gold_source_id": "soc3e", "gold_page": 30,
-      "evidence_quote": "Manifest functions are the consequences of a social process that are sought or anticipated, while latent functions are the unsought consequences of a social process.",
-      "filter": null
-    },
-    {
-      "id": "d04", "split": "dev", "type": "direct",
-      "question": "In a hypothesis, which variable is the cause of the change and which is the effect?",
-      "expected_answer": "The independent variable is the cause of the change; the dependent variable is the effect, or the thing that is changed.",
-      "gold_source_id": "soc3e", "gold_page": 50,
-      "evidence_quote": "an independent variable (IV), which is the cause of the change, and a dependent variable (DV), which is the effect, or thing that is changed",
-      "filter": null
-    },
-    {
-      "id": "d05", "split": "dev", "type": "paraphrase",
-      "question": "What is it called when people change how they behave because they know they are being watched as part of a study?",
-      "expected_answer": "The Hawthorne effect",
-      "gold_source_id": "soc3e", "gold_page": 63,
-      "evidence_quote": "the Hawthorne effect—which occurs when people change their behavior because they know they are being watched as part of a study",
-      "filter": null
-    },
-    {
-      "id": "d06", "split": "dev", "type": "conditional",
-      "question": "Why is the case study criticized as a primary research method?",
-      "expected_answer": "It gives depth on a topic but not enough evidence to form a generalized conclusion, because one case does not verify a pattern.",
-      "gold_source_id": "soc3e", "gold_page": 62,
-      "evidence_quote": "it does not provide enough evidence to form a generalized conclusion",
-      "filter": null
-    },
-    {
-      "id": "d07", "split": "dev", "type": "numeric",
-      "question": "In the Tuskegee study, how many men took part and how many of them were diagnosed with syphilis?",
-      "expected_answer": "600 African American men, of whom 399 were diagnosed with syphilis.",
-      "gold_source_id": "soc3e", "gold_page": 66,
-      "evidence_quote": "included 600 African American men, including 399 diagnosed with syphilis",
-      "filter": null
-    },
-    {
-      "id": "d08", "split": "dev", "type": "paraphrase",
-      "question": "Which kind of norm embodies the moral views and principles of a group?",
-      "expected_answer": "Mores",
-      "gold_source_id": "soc3e", "gold_page": 87,
-      "evidence_quote": "Mores (mor-ays) are norms that embody the moral views and principles of a group.",
-      "filter": null
-    },
-    {
-      "id": "d09", "split": "dev", "type": "direct",
-      "question": "According to the Sapir-Whorf hypothesis, what does language shape?",
-      "expected_answer": "Language shapes thought and thus behavior.",
-      "gold_source_id": "soc3e", "gold_page": 90,
-      "evidence_quote": "The hypothesis suggests that language shapes thought and thus behavior",
-      "filter": null
-    },
-    {
-      "id": "d10", "split": "dev", "type": "paraphrase",
-      "question": "How do sociologists tell a counterculture apart from a subculture?",
-      "expected_answer": "Countercultures reject some of the larger culture's norms and values (and may defy society), whereas subcultures operate relatively smoothly within it.",
-      "gold_source_id": "soc3e", "gold_page": 93,
-      "evidence_quote": "countercultures, which reject some of the larger culture's norms and values",
-      "filter": null
-    },
-    {
-      "id": "d11", "split": "dev", "type": "direct",
-      "question": "What does the term culture lag refer to?",
-      "expected_answer": "The time between the introduction of a new item of material culture and its social acceptance.",
-      "gold_source_id": "soc3e", "gold_page": 95,
-      "evidence_quote": "culture lag refers to the time that passes between the introduction of a new item of material culture and its social acceptance",
-      "filter": null
-    },
-    {
-      "id": "d12", "split": "dev", "type": "paraphrase",
-      "question": "Which sociologist argued that we see ourselves through the reactions of the people we interact with?",
-      "expected_answer": "Charles Horton Cooley (the looking-glass self)",
-      "gold_source_id": "soc3e", "gold_page": 28,
-      "evidence_quote": "Cooley argued that we 'see' ourselves by the reactions of others with whom we interact",
-      "filter": null
-    },
-    {
-      "id": "d13", "split": "dev", "type": "filter",
-      "question": "How do functionalists interpret the culture of education in the U.S.?",
-      "expected_answer": "The classrooms, textbooks, libraries, technology and teaching approaches show how much emphasis the society places on the value of educating its members.",
-      "gold_source_id": "soc3e", "gold_page": 96,
-      "evidence_quote": "demonstrates how much emphasis is placed on the value of educating a society's members",
-      "filter": {"chapter": 3},
-      "filter_note": "Assumed context: the reader is working in the chapter on culture.",
-      "distractor_pages": [30]
-    },
-    {
-      "id": "d14", "split": "dev", "type": "filter",
-      "question": "According to Max Weber, what role may personal values play in research design versus in interpreting responses?",
-      "expected_answer": "Personal values may influence some aspects of research design, but it is entirely inappropriate to let them shape the interpretation of the responses.",
-      "gold_source_id": "soc3e", "gold_page": 65,
-      "evidence_quote": "he declared it was entirely inappropriate to allow personal values to shape the interpretation of the responses",
-      "filter": {"chapter": 2},
-      "filter_note": "Assumed context: the reader is working in the chapter on sociological research.",
-      "distractor_pages": [26]
-    },
-    {
-      "id": "d15", "split": "dev", "type": "filter",
-      "question": "From the conflict perspective, who benefits from a society's cultural norms?",
-      "expected_answer": "A society's cultural norms benefit some people but hurt others; inequities become embedded in laws and policies, so the powerful oppress the powerless.",
-      "gold_source_id": "soc3e", "gold_page": 97,
-      "evidence_quote": "A society's cultural norms benefit some people but hurt others.",
-      "filter": {"chapter": 3},
-      "filter_note": "Assumed context: the reader is working in the chapter on culture.",
-      "distractor_pages": [32]
-    },
-    {
-      "id": "d16", "split": "dev", "type": "direct",
-      "question": "Where was the first European department of sociology established?",
-      "expected_answer": "At the University of Bordeaux in 1895, established by Emile Durkheim.",
-      "gold_source_id": "soc3e", "gold_page": 26,
-      "evidence_quote": "establishing the first European department of sociology at the University of Bordeaux in 1895",
-      "filter": null
-    },
-    {
-      "id": "d17", "split": "dev", "type": "paraphrase",
-      "question": "What is the term for believing that another culture is superior to your own?",
-      "expected_answer": "Xenocentrism",
-      "gold_source_id": "soc3e", "gold_page": 83,
-      "evidence_quote": "Xenocentrism is the opposite of ethnocentrism, and refers to the belief that another culture is superior to one's own.",
-      "filter": null
-    },
-    {
-      "id": "d18", "split": "dev", "type": "numeric",
-      "question": "How many traffic citations did the fifteen drivers collect in Heussenstamm's bumper-sticker experiment, and over how many days?",
-      "expected_answer": "Thirty-three citations in seventeen days.",
-      "gold_source_id": "soc3e", "gold_page": 64,
-      "evidence_quote": "After seventeen days, the fifteen drivers had collected a total of thirty-three traffic citations.",
-      "filter": null
-    },
-    {
-      "id": "t01", "split": "test", "type": "direct",
-      "question": "What are cultural universals?",
-      "expected_answer": "Patterns or traits that are globally common to all societies (for example, the family unit).",
-      "gold_source_id": "soc3e", "gold_page": 80,
-      "evidence_quote": "Cultural universals are patterns or traits that are globally common to all societies.",
-      "filter": null
-    },
-    {
-      "id": "t02", "split": "test", "type": "paraphrase",
-      "question": "Which basic emotions could Mafa tribal members recognize when they listened to a Western piano piece?",
-      "expected_answer": "Happiness, sadness, and fear.",
-      "gold_source_id": "soc3e", "gold_page": 81,
-      "evidence_quote": "they were able to recognize three basic emotions: happiness, sadness, and fear",
-      "filter": null
-    },
-    {
-      "id": "t03", "split": "test", "type": "conditional",
-      "question": "In a random sample, what is true about each person in the population?",
-      "expected_answer": "Every person in the population has the same chance of being chosen for the study.",
-      "gold_source_id": "soc3e", "gold_page": 54,
-      "evidence_quote": "In a random sample, every person in a population has the same chance of being chosen for the study.",
-      "filter": null
-    },
-    {
-      "id": "t04", "split": "test", "type": "filter",
-      "question": "What do symbolic interactionists who take a constructivist approach propose about reality?",
-      "expected_answer": "That reality is what humans cognitively construct it to be.",
-      "gold_source_id": "soc3e", "gold_page": 34,
-      "evidence_quote": "Constructivism is an extension of symbolic interaction theory which proposes that reality is what humans cognitively construct it to be.",
-      "filter": {"chapter": 1},
-      "filter_note": "Assumed context: the reader is working in the introductory chapter on sociology.",
-      "distractor_pages": [97]
-    },
-    {
-      "id": "t05", "split": "test", "type": "paraphrase",
-      "question": "What was the Milgram experiment designed to measure?",
-      "expected_answer": "The willingness of subjects to obey an authority figure who told them to act against their conscience.",
-      "gold_source_id": "soc3e", "gold_page": 66,
-      "evidence_quote": "Its purpose was to measure the willingness of study subjects to obey an authority figure who instructed them to perform acts that conflicted with their personal conscience.",
-      "filter": null
-    },
-    {
-      "id": "t06", "split": "test", "type": "numeric",
-      "question": "How long did the Lynds live in the town they studied for the Middletown ethnography, and which town was it?",
-      "expected_answer": "Eighteen months, in Muncie, Indiana.",
-      "gold_source_id": "soc3e", "gold_page": 61,
-      "evidence_quote": "they moved to the small town and lived there for eighteen months",
-      "filter": null
+  {
+    "id": "d02",
+    "type": "dien_dat_lai",
+    "split": "dev",
+    "question": "Khi anh cu hất đổ mâm cơm, chị cu kể lể rằng ngồi trên khung cửi từ sáng đến giờ mới kiếm được bao nhiêu?",
+    "gold_source_id": "namcao",
+    "gold_page": 7,
+    "evidence_quote": "Từ sáng đến giờ, tao ngồi trầy trầy trên khung cửi, mới được chừng một đồng hào",
+    "expected_answer": "Chừng một đồng hào."
+  },
+  {
+    "id": "d03",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Cả mâm cơm tối nhà anh cu chỉ có món gì ăn kèm?",
+    "gold_source_id": "namcao",
+    "gold_page": 7,
+    "evidence_quote": "Cả mâm có một bát muối vừng.",
+    "expected_answer": "Một bát muối vừng."
+  },
+  {
+    "id": "d04",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Khi chị cu nhấc niêu cơm lên xem thì còn lại bao nhiêu hạt cơm?",
+    "gold_source_id": "namcao",
+    "gold_page": 7,
+    "evidence_quote": "Còn ba hột cơm ranh!",
+    "expected_answer": "Ba hạt cơm."
+  },
+  {
+    "id": "d05",
+    "type": "dieu_kien",
+    "split": "dev",
+    "question": "Người ta định giết con Mực lần đầu vào dịp nào, và vì sao nó thoát nạn?",
+    "gold_source_id": "namcao",
+    "gold_page": 3,
+    "evidence_quote": "Thoạt tiên người ta định ngày chết cho nó vào dịp Thanh Minh. May cho nó hôm ấy bà chủ nhà bị ốm.",
+    "expected_answer": "Dịp Thanh Minh; nó thoát vì hôm ấy bà chủ nhà bị ốm."
+  },
+  {
+    "id": "d06",
+    "type": "dien_dat_lai",
+    "split": "dev",
+    "question": "Tật xấu nào của con Mực khiến người trong nhà không thể tha thứ được?",
+    "gold_source_id": "namcao",
+    "gold_page": 3,
+    "evidence_quote": "Nhưng nó lại sủa như một con gà gáy: cái này thì không thể nào tha thứ được.",
+    "expected_answer": "Nó sủa như một con gà gáy."
+  },
+  {
+    "id": "d07",
+    "type": "dieu_kien",
+    "split": "dev",
+    "question": "Lần cuối cùng con Mực thoát nạn là nhờ ai, và người đó đã báo tin gì?",
+    "gold_source_id": "namcao",
+    "gold_page": 3,
+    "evidence_quote": "Nhưng lần nầy Mực vẫn còn thoát nạn là vì nhờ có Du. Người con cả xa xôi ấy vừa viết thư báo chẳng bao lâu sẽ về.",
+    "expected_answer": "Nhờ Du, người con cả vừa viết thư báo sắp về."
+  },
+  {
+    "id": "d08",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Người nhà dùng vật gì úp lên con Mực khi nó đang ăn cơm để bắt nó?",
+    "gold_source_id": "namcao",
+    "gold_page": 3,
+    "evidence_quote": "Miếng chưa qua cổ thì cái thúng đã chụp quanh trên mình.",
+    "expected_answer": "Cái thúng."
+  },
+  {
+    "id": "d09",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Chị hàng bánh dầy tố cáo vợ Lúng đã làm gì với số bánh để chỉ phải trả một xu?",
+    "gold_source_id": "namcao",
+    "gold_page": 12,
+    "evidence_quote": "Tôi biết chị ta chập hai tấm vào làm một, nhưng tôi lờ đi, để rồi xem chị ta làm ăn thế nào.",
+    "expected_answer": "Chập hai tấm bánh vào làm một."
+  },
+  {
+    "id": "d10",
+    "type": "dieu_kien",
+    "split": "dev",
+    "question": "Vợ Lúng đi dệt cửi thuê mỗi ngày được bao nhiêu tiền, và người chồng lấy đi bao nhiêu?",
+    "gold_source_id": "namcao",
+    "gold_page": 12,
+    "evidence_quote": "Đi dệt cửi thuê cho người ta ngày được một hào thì chồng lấy cả một hào",
+    "expected_answer": "Được một hào và chồng lấy cả một hào."
+  },
+  {
+    "id": "d11",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Lúng đã mua những thứ gì để uống rượu trước khi trừng phạt vợ?",
+    "gold_source_id": "namcao",
+    "gold_page": 12,
+    "evidence_quote": "Cháo bắc lên bếp rồi, hắn chạy đi mua rượu. Cả chai. Với một cái đùi vịt hai hào nữa.",
+    "expected_answer": "Cả chai rượu và một cái đùi vịt hai hào."
+  },
+  {
+    "id": "d12",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Ngoài chiếc roi mây, Lúng còn đi tìm hai thứ gì nữa để trói vợ?",
+    "gold_source_id": "namcao",
+    "gold_page": 12,
+    "evidence_quote": "Còn phải đi tìm cái đòn gánh và sợi dây thừng nữa.",
+    "expected_answer": "Cái đòn gánh và sợi dây thừng.",
+    "filter": {
+      "period": "truoc-cach-mang"
     }
-  ]
-}
+  },
+  {
+    "id": "d13",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Hùng cho bạn biết mình đã bỏ Nga từ bao giờ?",
+    "gold_source_id": "namcao",
+    "gold_page": 14,
+    "evidence_quote": "Tôi bỏ Nga từ năm tháng trước kia rồi!",
+    "expected_answer": "Từ năm tháng trước."
+  },
+  {
+    "id": "d14",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Người kể chuyện thuê chỗ trọ ở xóm lao động Thị Nghè với giá bao nhiêu một tháng?",
+    "gold_source_id": "namcao",
+    "gold_page": 14,
+    "evidence_quote": "với cái giá tiền năm đồng một tháng",
+    "expected_answer": "Năm đồng một tháng."
+  },
+  {
+    "id": "d15",
+    "type": "dieu_kien",
+    "split": "dev",
+    "question": "Người kể chuyện nhìn qua khe ván nhà bên cạnh và thấy điều gì khiến ông run lên?",
+    "gold_source_id": "namcao",
+    "gold_page": 14,
+    "evidence_quote": "Người thiếu phụ có con mắt ngây thơ trong trẻo kia đang nũng nịu trên giường, cánh tay trần đu lấy cổ một chàng trai trẻ mà tôi nhận ra không phải là anh lính.",
+    "expected_answer": "Người vợ của người lính đang nũng nịu trên giường, ôm cổ một chàng trai trẻ không phải là anh lính."
+  },
+  {
+    "id": "d16",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Vì sao Tảo xộc vào nhà Bình trong cơn giận dữ?",
+    "gold_source_id": "namcao",
+    "gold_page": 51,
+    "evidence_quote": "Vẫn còn có đứa lẻn lút đem thịt bán cho bọn Pháp!",
+    "expected_answer": "Vì vẫn còn người lén đem thịt bán cho bọn Pháp."
+  },
+  {
+    "id": "d17",
+    "type": "truc_tiep",
+    "split": "dev",
+    "question": "Theo Tảo, việc đem thịt bán cho quân Pháp là tội gì?",
+    "gold_source_id": "namcao",
+    "gold_page": 51,
+    "evidence_quote": "cấp lương cho giặc! nuôi sống giặc! như vậy là bán nước, như vậy là phản nước",
+    "expected_answer": "Là bán nước, phản nước, cấp lương cho giặc.",
+    "filter": {
+      "period": "sau-cach-mang"
+    }
+  },
+  {
+    "id": "d18",
+    "type": "dien_dat_lai",
+    "split": "dev",
+    "question": "Theo lời 'bà tiên' mà Bình nhắc, mỗi lần muốn giận thì nên làm gì để nguôi?",
+    "gold_source_id": "namcao",
+    "gold_page": 51,
+    "evidence_quote": "mỗi lần ta muốn giận, chỉ việc rót đầy ba chén nước, uống mỗi chén một hơi cho hết.",
+    "expected_answer": "Rót đầy ba chén nước, uống mỗi chén một hơi cho hết."
+  },
+  {
+    "id": "t01",
+    "type": "truc_tiep",
+    "split": "test",
+    "question": "Thứ mà chị Chuột nấu rồi bảo các con là chè thật ra là gì?",
+    "gold_source_id": "namcao",
+    "gold_page": 24,
+    "evidence_quote": "Không phải chè, cám mà! Cám nấu mà bu bảo chè!",
+    "expected_answer": "Là cám.",
+    "filter": {
+      "period": "truoc-cach-mang"
+    }
+  },
+  {
+    "id": "t02",
+    "type": "truc_tiep",
+    "split": "test",
+    "question": "Chị Chuột nói mình vừa bán những thứ gì, và được bao nhiêu tiền?",
+    "gold_source_id": "namcao",
+    "gold_page": 24,
+    "evidence_quote": "Tôi vừa bán con chó mực với hai buồng chuối non được bốn hào.",
+    "expected_answer": "Con chó mực và hai buồng chuối non, được bốn hào."
+  },
+  {
+    "id": "t03",
+    "type": "truc_tiep",
+    "split": "test",
+    "question": "Bác Tư làm rơi vật gì xuống bể nước khiến cậu con trai phải lội xuống tìm?",
+    "gold_source_id": "namcao",
+    "gold_page": 50,
+    "evidence_quote": "Tao đánh rơi chai \"sâm-banh\" vào trong này rồi!",
+    "expected_answer": "Một chai sâm-banh."
+  },
+  {
+    "id": "t04",
+    "type": "dien_dat_lai",
+    "split": "test",
+    "question": "Vợ bác bếp Tư đã mất được bao lâu?",
+    "gold_source_id": "namcao",
+    "gold_page": 50,
+    "evidence_quote": "vợ chết đã ba năm rồi mà nghĩ đến lúc nào bác ta vẫn còn thương",
+    "expected_answer": "Đã ba năm."
+  },
+  {
+    "id": "t05",
+    "type": "truc_tiep",
+    "split": "test",
+    "question": "Chị tổ trưởng du kích cho biết bao nhiêu phần trong đội đã có chồng?",
+    "gold_source_id": "namcao",
+    "gold_page": 52,
+    "evidence_quote": "Hai phần ba chúng em đã có chồng, một vài người đã có con.",
+    "expected_answer": "Hai phần ba."
+  },
+  {
+    "id": "t06",
+    "type": "dien_dat_lai",
+    "split": "test",
+    "question": "So với làm ruộng, các chị du kích thấy việc đi chiến đấu vất vả thế nào?",
+    "gold_source_id": "namcao",
+    "gold_page": 52,
+    "evidence_quote": "Chúng tôi không thấy vất vả bằng làm ruộng.",
+    "expected_answer": "Không vất vả bằng làm ruộng."
+  }
+]

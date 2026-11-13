@@ -1,0 +1,59 @@
+{
+  "started_utc": "2026-11-13T12:00:55+00:00",
+  "elapsed_seconds": 51.0,
+  "embedding_model": "text-embedding-3-small",
+  "dimensions": 1536,
+  "embedding_tokens": 1176944,
+  "embedding_requests": 63,
+  "estimated_cost_usd": 0.02354,
+  "top_k": 3,
+  "configs": {
+    "A": {
+      "size": 500,
+      "overlap": 50
+    },
+    "B": {
+      "max_size": 1000
+    },
+    "C": {
+      "max_size": 1000
+    }
+  },
+  "embed_and_store_seconds": {
+    "A": 27.8,
+    "B": 13.3
+  },
+  "db_rows_after_run": {
+    "A": 2343,
+    "B": 1310
+  },
+  "chunk_stats": {
+    "A": {
+      "chunks": 2343,
+      "total_chars": 1157291,
+      "min": 56,
+      "median": 500,
+      "mean": 493.9,
+      "max": 500
+    },
+    "B": {
+      "chunks": 1310,
+      "total_chars": 1041889,
+      "min": 4,
+      "median": 887.5,
+      "mean": 795.3,
+      "max": 1000
+    }
+  },
+  "ingestion": {
+    "pages_loaded": 59,
+    "total_chars": 1038921,
+    "removed_furniture_lines": 97,
+    "events": {},
+    "pages_per_chapter": {
+      "truoc-cach-mang": 43,
+      "sau-cach-mang": 16
+    }
+  },
+  "questions": 24
+}
